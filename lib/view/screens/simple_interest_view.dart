@@ -1,4 +1,4 @@
-import 'package:demo_project/providers/simple_interest_provider.dart';
+import 'package:demo_project/models/simple_interest_model.dart';
 import 'package:demo_project/utils/buttons/clear_calculate_button.dart';
 import 'package:demo_project/utils/constants/app_colors.dart';
 import 'package:demo_project/utils/constants/app_text.dart';
@@ -11,7 +11,11 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:demo_project/models/simple_interest_model.dart'; // make sure it's imported
+import 'package:demo_project/providers/simple_interest_provider.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:permission_handler/permission_handler.dart';
+
 // import 'package:demo_project/widgets/result_card.dart';
 
 class SimpleInterestView extends StatefulWidget {
@@ -45,17 +49,52 @@ Interest: ₹${model.interest}
 Total: ₹${model.total}
 ''';
 
-    final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/simple_interest_result.txt');
-    await file.writeAsString(resultText);
+    // Get external storage directory (e.g., Downloads)
+    final dir = await getExternalStorageDirectory();
+    final file = File('${dir!.path}/simple_interest_result.pdf');
+
+    // Create PDF document
+    final pdf = pw.Document();
+
+    // Add a page with the resultText in the PDF
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Text(resultText, style: pw.TextStyle(fontSize: 18)),
+          );
+        },
+      ),
+    );
+
+    // Write the PDF file to the storage
+    await file.writeAsBytes(await pdf.save());
 
     if (isShare) {
+      // Share the file via Share Plus plugin
       await Share.shareXFiles([
         XFile(file.path),
       ], text: 'Simple Interest Result');
     } else {
+      // Show Snackbar confirmation when the file is downloaded
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("PDF saved to: ${file.path}")));
+    }
+  }
+
+  // permission request for downloading
+  void _requestPermissions() async {
+    // Check and request permission for storage
+    PermissionStatus status = await Permission.storage.request();
+    if (status.isGranted) {
+      // Proceed with saving the file
+    } else {
+      // Show an error or request permission again
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("File downloaded to: ${file.path}")),
+        SnackBar(
+          content: Text('Storage permission is required to save files.'),
+        ),
       );
     }
   }
@@ -71,10 +110,40 @@ Total: ₹${model.total}
       appBar: CustomAppBar(
         title: 'Simple Interest Calculator',
         onBack: () => Navigator.pop(context),
-        onDownload:
-            model != null
-                ? () => _shareOrDownload(model, isShare: false)
-                : null,
+        onDownload: () {
+          // Request storage permissions before proceeding with file download
+          _requestPermissions();
+
+          // If permission is granted, proceed with the download
+          showDialog(
+            context: context,
+            builder: (_) {
+              return AlertDialog(
+                title: Text('Choose File Type'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      _shareOrDownload(
+                        model!,
+                        isShare: false,
+                      ); // Download as PDF
+                      Navigator.pop(context);
+                    },
+                    child: Text('Download as PDF'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // Implement Image download logic if needed
+                      Navigator.pop(context);
+                    },
+                    child: Text('Download as Image'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+
         onShare:
             model != null ? () => _shareOrDownload(model, isShare: true) : null,
       ),
@@ -135,17 +204,27 @@ Total: ₹${model.total}
             ),
           ),
           SizedBox(height: 20),
-          ResultChart(interest: model!.interest, principal: model.principal),
+          model != null
+              ? ResultChart(
+                interest: model.interest,
+                principal: model.principal,
+              )
+              : SizedBox.shrink(),
 
           Spacer(),
         ],
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: () {
+          // Clear the model if it's not null
           provider.clear();
+
+          // Clear the controllers safely
           principalCtrl.clear();
           rateCtrl.clear();
           timeCtrl.clear();
+
+          // Show a snack bar notification
           ScaffoldMessenger.of(
             context,
           ).showSnackBar(SnackBar(content: Text("Fields cleared")));
