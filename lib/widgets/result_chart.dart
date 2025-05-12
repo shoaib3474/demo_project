@@ -1,18 +1,14 @@
-import 'package:demo_project/utils/constants/app_colors.dart';
-import 'package:demo_project/utils/constants/app_text.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class ResultChart extends StatelessWidget {
-  final double principal;
-  final double interest;
+  final List<ChartData> dataEntries;
 
-  const ResultChart({Key? key, required this.principal, required this.interest})
-    : super(key: key);
+  const ResultChart({Key? key, required this.dataEntries}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double total = principal + interest;
+    double total = dataEntries.fold(0, (sum, entry) => sum + entry.value);
 
     return Column(
       children: [
@@ -24,18 +20,16 @@ class ResultChart extends StatelessWidget {
               startDegreeOffset: 180,
               sectionsSpace: 2,
               centerSpaceRadius: 40,
-              sections: [
-                PieChartSectionData(
-                  value: principal,
-                  color: AppColors.secondary,
-                  showTitle: false,
-                ),
-                PieChartSectionData(
-                  value: interest,
-                  color: AppColors.primary,
-                  showTitle: false,
-                ),
-              ],
+              sections:
+                  dataEntries
+                      .map(
+                        (entry) => PieChartSectionData(
+                          value: entry.value,
+                          color: entry.color,
+                          showTitle: false,
+                        ),
+                      )
+                      .toList(),
             ),
           ),
         ),
@@ -43,13 +37,16 @@ class ResultChart extends StatelessWidget {
         // Legend
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              LegendItem(color: AppColors.secondary, text: 'Principal amount'),
-              SizedBox(width: 20),
-              LegendItem(color: AppColors.primary, text: 'Interest Amount'),
-            ],
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 20,
+            children:
+                dataEntries
+                    .map(
+                      (entry) =>
+                          LegendItem(color: entry.color, text: entry.label),
+                    )
+                    .toList(),
           ),
         ),
 
@@ -61,11 +58,11 @@ class ResultChart extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.black26,
+                  color: Colors.black26,
                   blurRadius: 6,
                   offset: Offset(0, 2),
                 ),
@@ -73,10 +70,16 @@ class ResultChart extends StatelessWidget {
             ),
             child: Column(
               children: [
-                SummaryRow(label: 'Principal Amount', value: principal),
-                Divider(),
-                SummaryRow(label: 'Total Earned', value: interest),
-                Divider(),
+                ...dataEntries
+                    .map(
+                      (entry) => Column(
+                        children: [
+                          SummaryRow(label: entry.label, value: entry.value),
+                          Divider(),
+                        ],
+                      ),
+                    )
+                    .toList(),
                 SummaryRow(label: 'Total Amount', value: total),
               ],
             ),
@@ -85,6 +88,14 @@ class ResultChart extends StatelessWidget {
       ],
     );
   }
+}
+
+class ChartData {
+  final double value;
+  final Color color;
+  final String label;
+
+  ChartData({required this.value, required this.color, required this.label});
 }
 
 class LegendItem extends StatelessWidget {
@@ -96,10 +107,11 @@ class LegendItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Container(width: 12, height: 12, color: color),
         SizedBox(width: 4),
-        Text(text, style: AppTextStyles.small14.copyWith(fontSize: 12)),
+        Text(text, style: TextStyle(fontSize: 12)),
       ],
     );
   }
@@ -116,7 +128,8 @@ class SummaryRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: AppTextStyles.body16),
+        Text(label, style: TextStyle(fontSize: 16)),
+        Spacer(),
         Text(
           '₹ ${value.toStringAsFixed(0)}',
           style: TextStyle(

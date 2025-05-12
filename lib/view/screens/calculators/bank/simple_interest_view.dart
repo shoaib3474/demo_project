@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:demo_project/models/simple_interest_model.dart';
 import 'package:demo_project/utils/buttons/clear_calculate_button.dart';
 import 'package:demo_project/utils/constants/app_colors.dart';
@@ -13,13 +15,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:demo_project/providers/simple_interest_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // import 'package:demo_project/widgets/result_card.dart';
 
 class SimpleInterestView extends StatefulWidget {
+  const SimpleInterestView({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _SimpleInterestViewState createState() => _SimpleInterestViewState();
 }
 
@@ -204,10 +208,21 @@ Total: ₹${model.total}
             ),
           ),
           SizedBox(height: 20),
+          // Assuming you have a model with principal and interest values
           model != null
               ? ResultChart(
-                interest: model.interest,
-                principal: model.principal,
+                dataEntries: [
+                  ChartData(
+                    value: model.principal,
+                    color: AppColors.secondary, // Use your color constants
+                    label: 'Principal Amount',
+                  ),
+                  ChartData(
+                    value: model.interest,
+                    color: AppColors.primary, // Use your color constants
+                    label: 'Interest Amount',
+                  ),
+                ],
               )
               : SizedBox.shrink(),
 
