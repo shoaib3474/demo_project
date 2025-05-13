@@ -2,11 +2,7 @@
 
 import 'package:demo_project/controller/compound_interest_controller.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
-import 'package:demo_project/utils/buttons/clear_calculate_button.dart';
-import 'package:demo_project/utils/constants/app_colors.dart';
-import 'package:demo_project/utils/constants/app_text.dart';
-import 'package:demo_project/utils/custom/custom_appbar.dart';
-import 'package:demo_project/utils/custom/custom_dropdown.dart';
+import 'package:demo_project/utils/utils.dart';
 import 'package:demo_project/view/screens/textfield.dart';
 import 'package:demo_project/widgets/result_chart.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +28,7 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
   }
 
   Future<void> _loadResult() async {
-    final model = await CompoundInterestController.load();
+    final model = await HRAController.load();
     if (model != null) {
       context.read<BaseCalculatorProvider>().setModel(model);
     }
@@ -52,14 +48,14 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
     final rate = double.tryParse(rateCtrl.text) ?? 0;
     final time = double.tryParse(timeCtrl.text) ?? 0;
 
-    final result = CompoundInterestController.calculate(
+    final result = HRAController.calculate(
       amount: principal,
       rate: rate,
       time: time,
       timeType: timeType,
     );
 
-    await CompoundInterestController.save(result);
+    await HRAController.save(result);
     context.read<BaseCalculatorProvider>().setModel(result);
   }
 
@@ -67,7 +63,7 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
     principalCtrl.clear();
     rateCtrl.clear();
     timeCtrl.clear();
-    await CompoundInterestController.clear();
+    await HRAController.clear();
     context.read<BaseCalculatorProvider>().clear();
 
     ScaffoldMessenger.of(

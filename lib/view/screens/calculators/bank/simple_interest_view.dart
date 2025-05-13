@@ -2,11 +2,8 @@
 
 import 'package:demo_project/controller/simple_interest_controller.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
-import 'package:demo_project/utils/buttons/clear_calculate_button.dart';
-import 'package:demo_project/utils/constants/app_colors.dart';
-import 'package:demo_project/utils/constants/app_text.dart';
-import 'package:demo_project/utils/custom/custom_appbar.dart';
-import 'package:demo_project/utils/custom/custom_dropdown.dart';
+import 'package:demo_project/utils/utils.dart';
+
 import 'package:demo_project/view/screens/textfield.dart';
 import 'package:demo_project/widgets/result_chart.dart';
 import 'package:flutter/material.dart';
