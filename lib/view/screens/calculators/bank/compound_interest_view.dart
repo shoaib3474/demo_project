@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:demo_project/controller/simple_interest_controller.dart';
+import 'package:demo_project/controller/compound_interest_controller.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/buttons/clear_calculate_button.dart';
 import 'package:demo_project/utils/constants/app_colors.dart';
@@ -12,14 +12,14 @@ import 'package:demo_project/widgets/result_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SimpleInterestView extends StatefulWidget {
-  const SimpleInterestView({super.key});
+class CompoundInterestView extends StatefulWidget {
+  const CompoundInterestView({super.key});
 
   @override
-  _SimpleInterestViewState createState() => _SimpleInterestViewState();
+  _CompoundInterestViewState createState() => _CompoundInterestViewState();
 }
 
-class _SimpleInterestViewState extends State<SimpleInterestView> {
+class _CompoundInterestViewState extends State<CompoundInterestView> {
   final principalCtrl = TextEditingController();
   final rateCtrl = TextEditingController();
   final timeCtrl = TextEditingController();
@@ -32,7 +32,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
   }
 
   Future<void> _loadResult() async {
-    final model = await SimpleInterestController.load();
+    final model = await CompoundInterestController.load();
     if (model != null) {
       context.read<BaseCalculatorProvider>().setModel(model);
     }
@@ -52,14 +52,14 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
     final rate = double.tryParse(rateCtrl.text) ?? 0;
     final time = double.tryParse(timeCtrl.text) ?? 0;
 
-    final result = SimpleInterestController.calculate(
+    final result = CompoundInterestController.calculate(
       amount: principal,
       rate: rate,
       time: time,
       timeType: timeType,
     );
 
-    await SimpleInterestController.save(result);
+    await CompoundInterestController.save(result);
     context.read<BaseCalculatorProvider>().setModel(result);
   }
 
@@ -67,7 +67,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
     principalCtrl.clear();
     rateCtrl.clear();
     timeCtrl.clear();
-    await SimpleInterestController.clear();
+    await CompoundInterestController.clear();
     context.read<BaseCalculatorProvider>().clear();
 
     ScaffoldMessenger.of(
@@ -83,7 +83,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
-        title: 'Simple Interest Calculator',
+        title: 'Compound Interest Calculator',
         onBack: () => Navigator.pop(context),
         onDownload: () {},
         onShare: () {},
