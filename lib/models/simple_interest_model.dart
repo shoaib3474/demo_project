@@ -1,10 +1,10 @@
-class SimpleInterestModel {
+class BaseCalculatorModel {
   double principal;
   double rate;
   double time;
   String timeType;
 
-  SimpleInterestModel({
+  BaseCalculatorModel({
     required this.principal,
     required this.rate,
     required this.time,
@@ -25,8 +25,8 @@ class SimpleInterestModel {
     'timeType': timeType,
   };
 
-  factory SimpleInterestModel.fromJson(Map<String, dynamic> json) {
-    return SimpleInterestModel(
+  factory BaseCalculatorModel.fromJson(Map<String, dynamic> json) {
+    return BaseCalculatorModel(
       principal: json['principal'],
       rate: json['rate'],
       time: json['time'],

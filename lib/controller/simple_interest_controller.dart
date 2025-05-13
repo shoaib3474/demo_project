@@ -1,26 +1,51 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../models/simple_interest_model.dart';
+import 'package:demo_project/utils/services/base_shared_preference.dart';
+import '../models/base_calculator_model.dart';
 
 class SimpleInterestController {
-  final String _key = 'simple_interest_data';
+  static const String _key = 'simple_interest_result';
 
-  Future<void> save(SimpleInterestModel model) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(_key, jsonEncode(model.toJson()));
+  static BaseCalculatorModel calculate({
+    required double amount,
+    required double rate,
+    required double time,
+    required String timeType,
+  }) {
+    final double years = _convertToYears(time, timeType);
+    final double interest = (amount * rate * years) / 100;
+    final double total = amount + interest;
+
+    return BaseCalculatorModel(
+      amount: amount,
+      rate: rate,
+      time: time,
+      timeType: timeType,
+      result1: interest,
+      result2: total,
+    );
   }
 
-  Future<SimpleInterestModel?> load() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? jsonData = prefs.getString(_key);
-    if (jsonData != null) {
-      return SimpleInterestModel.fromJson(jsonDecode(jsonData));
+  // Convert time to years based on selected timeType
+  static double _convertToYears(double time, String timeType) {
+    switch (timeType.toLowerCase()) {
+      case 'monthly':
+        return time / 12;
+      case 'quarterly':
+        return time / 4;
+      case 'yearly':
+      default:
+        return time;
     }
-    return null;
   }
 
-  Future<void> clear() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove(_key);
+  static Future<void> save(BaseCalculatorModel model) async {
+    await BaseSharedPreference.save(_key, model);
+  }
+
+  static Future<BaseCalculatorModel?> load() async {
+    return await BaseSharedPreference.load(_key);
+  }
+
+  static Future<void> clear() async {
+    await BaseSharedPreference.clear(_key);
   }
 }
