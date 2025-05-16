@@ -1,6 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names
 
-import 'package:demo_project/controller/simple_interest_controller.dart';
+import 'package:demo_project/controller/depreciation_ctrl.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/utils.dart';
 
@@ -9,18 +9,17 @@ import 'package:demo_project/widgets/result_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SimpleInterestView extends StatefulWidget {
-  const SimpleInterestView({super.key});
+class DepreciationCalcView extends StatefulWidget {
+  const DepreciationCalcView({super.key});
 
   @override
-  _SimpleInterestViewState createState() => _SimpleInterestViewState();
+  _DepreciationCalcViewState createState() => _DepreciationCalcViewState();
 }
 
-class _SimpleInterestViewState extends State<SimpleInterestView> {
-  final principalCtrl = TextEditingController();
-  final rateCtrl = TextEditingController();
-  final timeCtrl = TextEditingController();
-  String timeType = 'Yearly';
+class _DepreciationCalcViewState extends State<DepreciationCalcView> {
+  final PPriceCtrl = TextEditingController();
+  final scrapValueCtrl = TextEditingController();
+  final usefulLifeCtrl = TextEditingController();
 
   @override
   void initState() {
@@ -36,24 +35,26 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
   }
 
   void _onCalculate() async {
-    if (principalCtrl.text.isEmpty ||
-        rateCtrl.text.isEmpty ||
-        timeCtrl.text.isEmpty) {
+    if (PPriceCtrl.text.isEmpty ||
+        scrapValueCtrl.text.isEmpty ||
+        usefulLifeCtrl.text.isEmpty) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("Please fill all fields")));
       return;
     }
 
-    final principal = double.tryParse(principalCtrl.text) ?? 0;
-    final rate = double.tryParse(rateCtrl.text) ?? 0;
-    final time = double.tryParse(timeCtrl.text) ?? 0;
+    final principal = double.tryParse(PPriceCtrl.text) ?? 0;
+    final scrapValue =
+        double.tryParse(scrapValueCtrl.text) ?? 0; // Fixed variable name
+    final usefulLife =
+        double.tryParse(usefulLifeCtrl.text) ?? 0; // Added useful life parsing
 
+    // Perform depreciation calculation
     final result = DepreciationController.calculate(
-      amount: principal,
-      rate: rate,
-      time: time,
-      timeType: timeType,
+      purchasePrice: principal,
+      scrapValue: scrapValue,
+      usefulLife: usefulLife,
     );
 
     await DepreciationController.save(result);
@@ -61,9 +62,10 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
   }
 
   void _onClear() async {
-    principalCtrl.clear();
-    rateCtrl.clear();
-    timeCtrl.clear();
+    PPriceCtrl.clear();
+    scrapValueCtrl.clear();
+    usefulLifeCtrl.clear();
+
     await DepreciationController.clear();
     context.read<BaseCalculatorProvider>().clear();
 
@@ -80,7 +82,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
-        title: 'Simple Interest Calculator',
+        title: 'Depreciation Calculator',
         onBack: () => Navigator.pop(context),
         onDownload: () {},
         onShare: () {},
@@ -90,49 +92,31 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
           SingleChildScrollView(
             padding: EdgeInsets.all(16),
             child: Column(
-              spacing: 8,
+              spacing: 4,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(" Principal Amount", style: AppTextStyles.body16),
-
+                SizedBox(height: 8),
+                Text(" Purchase Price", style: AppTextStyles.body16),
                 CustomTextField(
                   hintText: 'Amount',
-                  controller: principalCtrl,
+                  controller: PPriceCtrl,
                   rightText: "₹",
                 ),
-                SizedBox(height: 2),
-                Text(" Rate of Interest(P.A)", style: AppTextStyles.body16),
+                SizedBox(height: 8),
+                Text(" Scrap Value", style: AppTextStyles.body16),
                 CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
+                  hintText: 'Value',
+                  controller: scrapValueCtrl,
                   rightText: "%",
                 ),
-                SizedBox(height: 2),
-                Text(" Time Period", style: AppTextStyles.body16),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 250,
-                      child: CustomTextField(
-                        hintText: 'Time',
-                        controller: timeCtrl,
-                      ),
-                    ),
-                    Spacer(),
-                    SizedBox(
-                      width: 126,
-                      height: 52,
-                      child: CustomDropdown(
-                        height: 44,
-                        items: ["Yearly", "Monthly", "Quarterly"],
-                        initialValue: 'Yearly',
-                        onChanged: (val) {
-                          setState(() => timeType = val);
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(height: 8),
+                Text(" Estimated Useful Life", style: AppTextStyles.body16),
+                CustomTextField(
+                  hintText: 'Years',
+                  controller: usefulLifeCtrl,
+                  rightText: "Y",
                 ),
+                SizedBox(height: 8),
               ],
             ),
           ),
@@ -141,14 +125,14 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
             ResultChart(
               dataEntries: [
                 ChartData(
-                  value: model.amount,
+                  value: model.amount ?? 0.0,
                   color: AppColors.secondary,
-                  label: 'Principal Amount',
+                  label: 'Depreciation Amount',
                 ),
                 ChartData(
                   value: model.result1 ?? 0.0,
                   color: AppColors.primary,
-                  label: 'Interest Amount',
+                  label: 'Remaining Value',
                 ),
               ],
             )

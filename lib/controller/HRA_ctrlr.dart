@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:demo_project/utils/services/base_shared_preference.dart';
 import '../models/base_calculator_model.dart';
 

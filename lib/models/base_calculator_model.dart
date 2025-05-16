@@ -5,6 +5,7 @@ class BaseCalculatorModel {
   final String? timeType; // Optional
   final double? result1; // Optional - e.g., interest
   final double? result2; // Optional - e.g., total
+  final double? result3; // Optional - e.g., total
 
   BaseCalculatorModel({
     required this.amount,
@@ -13,6 +14,7 @@ class BaseCalculatorModel {
     this.timeType,
     this.result1,
     this.result2,
+    this.result3,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +25,7 @@ class BaseCalculatorModel {
       'timeType': timeType,
       'result1': result1,
       'result2': result2,
+      'result3': result3,
     };
   }
 
@@ -34,6 +37,7 @@ class BaseCalculatorModel {
       timeType: map['timeType'],
       result1: map['result1'],
       result2: map['result2'],
+      result3: map['result3'],
     );
   }
 }

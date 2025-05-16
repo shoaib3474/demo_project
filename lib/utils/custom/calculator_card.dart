@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CalculatorCard extends StatelessWidget {
-  final IconData icon;
-  final Color iconColor;
+  final String icon;
+  final Color? iconColor;
   final String title;
   final VoidCallback onTap; // Callback for tap action
 
   const CalculatorCard({
     Key? key,
     required this.icon,
-    required this.iconColor,
+    this.iconColor,
     required this.title,
     required this.onTap, // Required onTap callback
   }) : super(key: key);
@@ -22,8 +23,9 @@ class CalculatorCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: 90,
+            width: 110,
             height: 90,
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: Colors.white,
@@ -37,7 +39,8 @@ class CalculatorCard extends StatelessWidget {
                 ),
               ],
             ),
-            child: Icon(icon, color: iconColor, size: 54),
+            child: SvgPicture.asset(icon, color: iconColor),
+            // child: Icon(icon, color: iconColor, size: 54),
           ),
           const SizedBox(height: 8), // Spacing between the container and text
           Text(
