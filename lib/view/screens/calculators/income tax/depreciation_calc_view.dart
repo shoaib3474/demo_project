@@ -135,6 +135,7 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
                   label: 'Remaining Value',
                 ),
               ],
+              summaryRows: [],
             )
           else
             SizedBox.shrink(),

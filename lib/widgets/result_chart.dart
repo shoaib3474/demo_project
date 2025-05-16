@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
+import '../utils/utils.dart';
+
 class ResultChart extends StatelessWidget {
   final List<ChartData> dataEntries;
+  final List<SummaryRowData> summaryRows;
 
-  const ResultChart({Key? key, required this.dataEntries}) : super(key: key);
+  const ResultChart({
+    Key? key,
+    required this.dataEntries,
+    required this.summaryRows,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double total = dataEntries.fold(0, (sum, entry) => sum + entry.value);
+    // Show nothing if no data
+    if (dataEntries.isEmpty || summaryRows.isEmpty)
+      return const SizedBox.shrink();
 
     return Column(
       children: [
@@ -50,17 +59,17 @@ class ResultChart extends StatelessWidget {
           ),
         ),
 
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
 
         // Summary Box
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   color: Colors.black26,
                   blurRadius: 6,
@@ -69,19 +78,15 @@ class ResultChart extends StatelessWidget {
               ],
             ),
             child: Column(
-              children: [
-                ...dataEntries
-                    .map(
-                      (entry) => Column(
-                        children: [
-                          SummaryRow(label: entry.label, value: entry.value),
-                          Divider(),
-                        ],
-                      ),
-                    )
-                    .toList(),
-                SummaryRow(label: 'Total Amount', value: total),
-              ],
+              children:
+                  summaryRows.map((row) {
+                    return Column(
+                      children: [
+                        SummaryRow(label: row.label, value: row.value),
+                        const Divider(),
+                      ],
+                    );
+                  }).toList(),
             ),
           ),
         ),
@@ -98,11 +103,19 @@ class ChartData {
   ChartData({required this.value, required this.color, required this.label});
 }
 
+class SummaryRowData {
+  final String label;
+  final double value;
+
+  SummaryRowData({required this.label, required this.value});
+}
+
 class LegendItem extends StatelessWidget {
   final Color color;
   final String text;
 
-  const LegendItem({required this.color, required this.text});
+  const LegendItem({required this.color, required this.text, Key? key})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -110,8 +123,8 @@ class LegendItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(width: 12, height: 12, color: color),
-        SizedBox(width: 4),
-        Text(text, style: TextStyle(fontSize: 12)),
+        const SizedBox(width: 4),
+        Text(text, style: const TextStyle(fontSize: 12)),
       ],
     );
   }
@@ -121,22 +134,17 @@ class SummaryRow extends StatelessWidget {
   final String label;
   final double value;
 
-  const SummaryRow({required this.label, required this.value});
+  const SummaryRow({required this.label, required this.value, Key? key})
+    : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: TextStyle(fontSize: 16)),
-        Spacer(),
+        Expanded(child: Text(label, style: AppTextStyles.body16)),
         Text(
           '₹ ${value.toStringAsFixed(0)}',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
+          style: AppTextStyles.heading20.copyWith(color: AppColors.primary),
         ),
       ],
     );

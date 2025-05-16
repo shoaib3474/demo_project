@@ -6,6 +6,7 @@ import 'package:demo_project/utils/utils.dart';
 
 import 'package:demo_project/view/screens/textfield.dart';
 import 'package:demo_project/widgets/result_chart.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -149,6 +150,20 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
                   value: model.result1 ?? 0.0,
                   color: AppColors.primary,
                   label: 'Interest Amount',
+                ),
+              ],
+              summaryRows: [
+                SummaryRowData(
+                  label: "Principle Amount",
+                  value: double.tryParse(principalCtrl.text) ?? 0.0,
+                ),
+                SummaryRowData(
+                  label: "Total Earned",
+                  value: model.result1 ?? 0.0,
+                ),
+                SummaryRowData(
+                  label: "Total Amount",
+                  value: (model.amount + (model.result1 ?? 0.0)),
                 ),
               ],
             )

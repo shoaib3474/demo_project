@@ -1,11 +1,9 @@
-import 'package:demo_project/view/screens/calculators/bank/compound_interest_view.dart';
-import 'package:demo_project/view/screens/calculators/bank/simple_interest_view.dart';
+import 'package:demo_project/routes/calc_routs.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_project/gen/assets.gen.dart';
 import 'package:demo_project/utils/custom/calculator_card.dart';
+import 'package:get/get.dart';
 import '../../utils/utils.dart';
-import 'package:demo_project/gen/assets.gen.dart';
-
 import 'package:flutter_svg/svg.dart';
 
 class ToolsScreen extends StatefulWidget {
@@ -119,12 +117,13 @@ class _ToolsScreenState extends State<ToolsScreen> {
                       title: Text(calc),
                       trailing: SvgPicture.asset(Assets.icons.rightArrow),
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CompoundInterestView(),
-                          ),
-                        );
+                        final viewBuilder = calculatorRouteMap[calc];
+                        Get.back(); // 👈 Pop the bottom sheet first
+                        if (viewBuilder != null) {
+                          Get.to(() => viewBuilder()); // ✅ Navigate using GetX
+                        } else {
+                          Get.snackbar("Error", "No screen found for $calc");
+                        }
                       },
                     ),
                   ),

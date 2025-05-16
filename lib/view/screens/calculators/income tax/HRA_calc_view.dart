@@ -144,6 +144,15 @@ class _HRAcalcViewState extends State<HRAcalcView> {
                   label: 'HRA Taxable',
                 ),
               ],
+              summaryRows: [
+                SummaryRowData(label: "HRA", value: model.result1 ?? 0.0),
+                SummaryRowData(label: "Exemption", value: model.result2 ?? 0.0),
+                SummaryRowData(
+                  label: "50 % Basic",
+                  value: model.result3 ?? 0.0,
+                ),
+                // SummaryRowData(label: "Salary", value: model.result4 ?? 0.0),
+              ],
             )
           else
             SizedBox.shrink(),

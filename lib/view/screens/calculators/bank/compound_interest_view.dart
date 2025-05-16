@@ -150,6 +150,20 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
                   label: 'Interest Amount',
                 ),
               ],
+              summaryRows: [
+                SummaryRowData(
+                  label: "Principle Amount",
+                  value: double.tryParse(principalCtrl.text) ?? 0.0,
+                ),
+                SummaryRowData(
+                  label: "Total Earned",
+                  value: model.result1 ?? 0.0,
+                ),
+                SummaryRowData(
+                  label: "Total Amount",
+                  value: (model.amount + (model.result1 ?? 0.0)),
+                ),
+              ],
             )
           else
             SizedBox.shrink(),
