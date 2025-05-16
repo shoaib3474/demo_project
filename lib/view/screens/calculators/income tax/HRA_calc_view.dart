@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names
 
-import 'package:demo_project/controller/HRA_ctrlr.dart';
+import 'package:demo_project/controller/income_tax_ctrls/HRA_ctrlr.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/utils.dart';
 import 'package:demo_project/view/screens/textfield.dart';
@@ -145,17 +145,18 @@ class _HRAcalcViewState extends State<HRAcalcView> {
                 ),
               ],
               summaryRows: [
-                SummaryRowData(label: "HRA", value: model.result1 ?? 0.0),
-                SummaryRowData(label: "Exemption", value: model.result2 ?? 0.0),
+                SummaryRowData(label: "HRA", value: model.rate ?? 0.0),
+                SummaryRowData(label: "Exemption", value: model.result1 ?? 0.0),
                 SummaryRowData(
                   label: "50 % Basic",
                   value: model.result3 ?? 0.0,
                 ),
-                // SummaryRowData(label: "Salary", value: model.result4 ?? 0.0),
+                SummaryRowData(label: "Salary", value: model.result4 ?? 0.0),
               ],
             )
           else
             SizedBox.shrink(),
+
           Spacer(),
         ],
       ),

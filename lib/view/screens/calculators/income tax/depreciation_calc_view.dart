@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names
 
-import 'package:demo_project/controller/depreciation_ctrl.dart';
+import 'package:demo_project/controller/income_tax_ctrls/depreciation_ctrl.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/utils.dart';
 
@@ -127,15 +127,19 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
                 ChartData(
                   value: model.amount ?? 0.0,
                   color: AppColors.secondary,
-                  label: 'Depreciation Amount',
+                  label: 'Tax Owned',
                 ),
                 ChartData(
                   value: model.result1 ?? 0.0,
                   color: AppColors.primary,
-                  label: 'Remaining Value',
+                  label: 'Tax Capital Gains',
                 ),
               ],
-              summaryRows: [],
+              summaryRows: [
+                SummaryRowData(label: "Depreciation (P.A)",value: ),
+                SummaryRowData(label: "Depreciation Percentage %",value: ),
+                SummaryRowData(label: "Cost of Assets",value: ),
+              ],
             )
           else
             SizedBox.shrink(),
