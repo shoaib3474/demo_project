@@ -1,11 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
-
 import 'package:demo_project/controller/income_tax_ctrls/capital_gain_ctrl.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
-import 'package:demo_project/utils/constants/app_colors.dart';
 import 'package:demo_project/utils/utils.dart';
 import 'package:demo_project/view/screens/textfield.dart';
-
 import 'package:demo_project/widgets/result_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -44,9 +41,8 @@ class _CapitalGainCalcViewState extends State<CapitalGainCalcView> {
 
     if (purchase == null || sale == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please enter valid numeric values")),
+        const SnackBar(content: Text("Please enter valid numeric values")),
       );
-
       return;
     }
 
@@ -69,7 +65,7 @@ class _CapitalGainCalcViewState extends State<CapitalGainCalcView> {
     context.read<BaseCalculatorProvider>().clear();
     ScaffoldMessenger.of(
       context,
-    ).showSnackBar(SnackBar(content: Text("Fields cleared")));
+    ).showSnackBar(const SnackBar(content: Text("Fields cleared")));
   }
 
   @override
@@ -85,68 +81,76 @@ class _CapitalGainCalcViewState extends State<CapitalGainCalcView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Purchase Price", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: purchaseCtrl,
-                  rightText: "₹",
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("Purchase Price", style: AppTextStyles.body16),
+                    CustomTextField(
+                      hintText: 'Amount',
+                      controller: purchaseCtrl,
+                      rightText: "₹",
+                    ),
+                    const SizedBox(height: 12),
+                    Text("Sale Price", style: AppTextStyles.body16),
+                    CustomTextField(
+                      hintText: 'Sale Rate',
+                      controller: saleCtrl,
+                      rightText: "₹",
+                    ),
+                    const SizedBox(height: 12),
+                    Text("Capital Gain", style: AppTextStyles.body16),
+                    CustomTextField(
+                      hintText: 'Gain',
+                      controller: capitalGainCtrl,
+                      rightText: "₹",
+                    ),
+                    const SizedBox(height: 20),
+                    if (model != null)
+                      ResultChart(
+                        dataEntries: [
+                          ChartData(
+                            value: model.amount,
+                            color: AppColors.secondary,
+                            label: 'Purchase Price',
+                          ),
+                          ChartData(
+                            value: model.result1 ?? 0.0,
+                            color: AppColors.primary,
+                            label: 'Capital Gain',
+                          ),
+                        ],
+                        summaryRows: [
+                          SummaryRowData(
+                            label: "Purchase Price",
+                            value: model.amount,
+                          ),
+                          SummaryRowData(
+                            label: "Capital Gain",
+                            value: model.result1 ?? 0.0,
+                          ),
+                          SummaryRowData(
+                            label: "Sale Price",
+                            value: model.rate,
+                          ),
+                        ],
+                      ),
+                  ],
                 ),
-                const SizedBox(height: 12),
-                Text("Sale Price", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Sale Rate',
-                  controller: saleCtrl,
-                  rightText: "₹",
-                ),
-                const SizedBox(height: 12),
-                Text("Capital Gain", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Gain',
-                  controller: capitalGainCtrl,
-                  rightText: "₹",
-                ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount,
-                  color: AppColors.secondary,
-                  label: 'Purchase Price',
-                ),
-                ChartData(
-                  value: model.result1 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'Capital Gain',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(label: "Purchase Price", value: model.amount),
-                SummaryRowData(
-                  label: "Capital Gain",
-                  value: model.result1 ?? 0.0,
-                ),
-                SummaryRowData(label: "Sale Price", value: model.rate),
-              ],
-            )
-          else
-            const SizedBox.shrink(),
-          const Spacer(),
-        ],
-      ),
-      bottomSheet: ClearCalculateButtons(
-        onClearPressed: _onClear,
-        onCalculatePressed: _onCalculate,
+            const SizedBox(height: 16),
+            ClearCalculateButtons(
+              onClearPressed: _onClear,
+              onCalculatePressed: _onCalculate,
+            ),
+          ],
+        ),
       ),
     );
   }

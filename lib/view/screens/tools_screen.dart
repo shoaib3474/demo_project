@@ -42,7 +42,7 @@ class _ToolsScreenState extends State<ToolsScreen> {
       'color': Colors.lime,
       'calculators': [
         "Post Office MIS",
-        "CAGR Calculator",
+        "CARG Calculator",
         "RD Calculator",
         "FD Calculator",
         "Lump Sum Calculator",
