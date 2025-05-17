@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class TaxtCalcView extends StatefulWidget {
-  TaxtCalcView({super.key});
+  const TaxtCalcView({super.key});
 
   @override
   _TaxtCalcViewState createState() => _TaxtCalcViewState();
@@ -147,7 +147,7 @@ class _TaxtCalcViewState extends State<TaxtCalcView> {
                 ),
               ],
               summaryRows: [
-                SummaryRowData(label: "HRA", value: model.rate ?? 0.0),
+                SummaryRowData(label: "HRA", value: model.rate),
                 SummaryRowData(label: "Exemption", value: model.result1 ?? 0.0),
                 SummaryRowData(
                   label: "50 % Basic",

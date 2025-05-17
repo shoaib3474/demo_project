@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'dart:math';
 
 import 'package:demo_project/utils/services/base_shared_preference.dart';

@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HRAcalcView extends StatefulWidget {
-  HRAcalcView({super.key});
+  const HRAcalcView({super.key});
 
   @override
   _HRAcalcViewState createState() => _HRAcalcViewState();
@@ -145,7 +145,7 @@ class _HRAcalcViewState extends State<HRAcalcView> {
                 ),
               ],
               summaryRows: [
-                SummaryRowData(label: "HRA", value: model.rate ?? 0.0),
+                SummaryRowData(label: "HRA", value: model.rate),
                 SummaryRowData(label: "Exemption", value: model.result1 ?? 0.0),
                 SummaryRowData(
                   label: "50 % Basic",

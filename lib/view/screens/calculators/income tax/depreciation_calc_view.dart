@@ -123,7 +123,7 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
                   ResultChart(
                     dataEntries: [
                       ChartData(
-                        value: model.amount ?? 0.0,
+                        value: model.amount,
                         color: AppColors.secondary,
                         label: 'Cost of Asset',
                       ),
@@ -144,7 +144,7 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
                       ),
                       SummaryRowData(
                         label: "Cost of Assets",
-                        value: model.amount ?? 0.0,
+                        value: model.amount,
                       ),
                     ],
                   ),
