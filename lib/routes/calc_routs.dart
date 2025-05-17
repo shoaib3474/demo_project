@@ -7,6 +7,8 @@ import 'package:demo_project/view/screens/calculators/income%20tax/tax_calc_view
 import 'package:demo_project/view/screens/calculators/investment/CAGA_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/FD_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/RD_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/investment/SIP_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/investment/lump_sum_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/post_office_MIS_view.dart';
 import 'package:flutter/material.dart';
 // Import all required calculator views...
@@ -22,6 +24,6 @@ final Map<String, Widget Function()> calculatorRouteMap = {
   "CARG Calculator": () => CARGcalcView(),
   "RD Calculator": () => RDcalcView(),
   "FD Calculator": () => FDcalcView(),
-  // "Lump Sum Calculator",
-  // "SIP Calculator",
+  "Lump Sum Calculator": () => LumpSumCalcView(),
+  "SIP Calculator": () => SIPcalcView(),
 };
