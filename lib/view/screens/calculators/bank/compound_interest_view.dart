@@ -28,7 +28,7 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
   }
 
   Future<void> _loadResult() async {
-    final model = await HRAController.load();
+    final model = await CompoundInterestCtrl.load();
     if (model != null) {
       context.read<BaseCalculatorProvider>().setModel(model);
     }
@@ -48,14 +48,14 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
     final rate = double.tryParse(rateCtrl.text) ?? 0;
     final time = double.tryParse(timeCtrl.text) ?? 0;
 
-    final result = HRAController.calculate(
+    final result = CompoundInterestCtrl.calculate(
       amount: principal,
       rate: rate,
       time: time,
       timeType: timeType,
     );
 
-    await HRAController.save(result);
+    await CompoundInterestCtrl.save(result);
     context.read<BaseCalculatorProvider>().setModel(result);
   }
 
@@ -63,7 +63,7 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
     principalCtrl.clear();
     rateCtrl.clear();
     timeCtrl.clear();
-    await HRAController.clear();
+    await CompoundInterestCtrl.clear();
     context.read<BaseCalculatorProvider>().clear();
 
     ScaffoldMessenger.of(

@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:demo_project/utils/services/base_shared_preference.dart';
 import '../../models/base_calculator_model.dart';
 
-class HRAController {
+class CompoundInterestCtrl {
   static const String _key = 'compound_interest_result';
 
   static BaseCalculatorModel calculate({

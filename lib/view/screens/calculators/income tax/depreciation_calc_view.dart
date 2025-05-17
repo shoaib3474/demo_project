@@ -87,64 +87,149 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              spacing: 4,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 8),
-                Text(" Purchase Price", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: PPriceCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 8),
-                Text(" Scrap Value", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Value',
-                  controller: scrapValueCtrl,
-                  rightText: "%",
-                ),
-                SizedBox(height: 8),
-                Text(" Estimated Useful Life", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Years',
-                  controller: usefulLifeCtrl,
-                  rightText: "Y",
-                ),
-                SizedBox(height: 8),
-              ],
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            /// Input Fields
+            SizedBox(height: 8),
+            Text(" Purchase Price", style: AppTextStyles.body16),
+            CustomTextField(
+              hintText: 'Amount',
+              controller: PPriceCtrl,
+              rightText: "₹",
             ),
-          ),
-          SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount ?? 0.0,
-                  color: AppColors.secondary,
-                  label: 'Tax Owned',
-                ),
-                ChartData(
-                  value: model.result1 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'Tax Capital Gains',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(label: "Depreciation (P.A)",value: ),
-                SummaryRowData(label: "Depreciation Percentage %",value: ),
-                SummaryRowData(label: "Cost of Assets",value: ),
-              ],
-            )
-          else
-            SizedBox.shrink(),
-          Spacer(),
-        ],
+            SizedBox(height: 8),
+            Text(" Scrap Value", style: AppTextStyles.body16),
+            CustomTextField(
+              hintText: 'Value',
+              controller: scrapValueCtrl,
+              rightText: "%",
+            ),
+            SizedBox(height: 8),
+            Text(" Estimated Useful Life", style: AppTextStyles.body16),
+            CustomTextField(
+              hintText: 'Years',
+              controller: usefulLifeCtrl,
+              rightText: "Y",
+            ),
+            SizedBox(height: 20),
+
+            /// Output Section (Chart + Table)
+            if (model != null)
+              Column(
+                children: [
+                  ResultChart(
+                    dataEntries: [
+                      ChartData(
+                        value: model.amount ?? 0.0,
+                        color: AppColors.secondary,
+                        label: 'Cost of Asset',
+                      ),
+                      ChartData(
+                        value: model.result1 ?? 0.0,
+                        color: AppColors.primary,
+                        label: 'Depreciation (P.A)',
+                      ),
+                    ],
+                    summaryRows: [
+                      SummaryRowData(
+                        label: "Depreciation (P.A)",
+                        value: model.result1 ?? 0.0,
+                      ),
+                      SummaryRowData(
+                        label: "Depreciation Percentage %",
+                        value: model.result2 ?? 0.0,
+                      ),
+                      SummaryRowData(
+                        label: "Cost of Assets",
+                        value: model.amount ?? 0.0,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Calculation", style: AppTextStyles.heading20),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Table(
+                    border: TableBorder.all(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    columnWidths: const {
+                      0: FlexColumnWidth(1),
+                      1: FlexColumnWidth(2),
+                      2: FlexColumnWidth(2),
+                      3: FlexColumnWidth(2),
+                    },
+                    children: [
+                      TableRow(
+                        children: [
+                          _tableCell(
+                            "Year",
+                            style: AppTextStyles.body16.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                          _tableCell(
+                            "Opening Value",
+                            style: AppTextStyles.body16.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                          _tableCell(
+                            "Depreciation",
+                            style: AppTextStyles.body16.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                          _tableCell(
+                            "Closing Value",
+                            style: AppTextStyles.body16.copyWith(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      for (var row in model.table ?? [])
+                        TableRow(
+                          children: [
+                            _tableCell(
+                              row[0].toInt().toString(),
+                              style: AppTextStyles.body16.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            _tableCell(
+                              row[1].toStringAsFixed(2),
+                              style: AppTextStyles.body16.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            _tableCell(
+                              row[2].toStringAsFixed(2),
+                              style: AppTextStyles.body16.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            _tableCell(
+                              row[3].toStringAsFixed(2),
+                              style: AppTextStyles.body16.copyWith(
+                                color: AppColors.primary,
+                              ),
+                            ),
+                          ],
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            SizedBox(height: 100), // Leave space for bottom buttons
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,
@@ -152,4 +237,12 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
       ),
     );
   }
+
+  Widget _tableCell(String text, {required TextStyle style}) => Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(text, textAlign: TextAlign.center, style: style),
+    ),
+  );
 }

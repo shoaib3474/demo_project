@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
-  final TextEditingController controller; // ✅ Required
-  final String? rightText; // ✅ Optional (₹ or any other)
+  final TextEditingController controller;
+  final String? rightText;
   final ValueChanged<String>? onChanged;
+  final TextInputType keyboardType; // ✅ Add this
 
   const CustomTextField({
     Key? key,
@@ -13,6 +14,7 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     this.rightText,
     this.onChanged,
+    this.keyboardType = TextInputType.number, // ✅ Default to number
   }) : super(key: key);
 
   @override
@@ -51,7 +53,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               child: TextField(
                 controller: widget.controller,
                 focusNode: _focusNode,
-                keyboardType: TextInputType.number,
+                keyboardType: widget.keyboardType, // ✅ Use provided or default
                 decoration: InputDecoration(
                   hintText: widget.hintText,
                   border: InputBorder.none,
@@ -61,7 +63,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ),
           ),
 
-          // Optional right text (only if not focused and text is provided)
+          // Optional right text
           if (!_isFocused && widget.rightText != null) ...[
             Container(height: 50, width: 1, color: Colors.grey.shade400),
             Container(
