@@ -54,7 +54,6 @@ class _ToolsScreenState extends State<ToolsScreen> {
       'title': "Loan\nCalculators",
       'color': Colors.green,
       'calculators': [
-        "Loan Calculator",
         "Business Loan Calculator",
         "Car Loan Calculator",
         "Loan Against Property",
@@ -67,6 +66,12 @@ class _ToolsScreenState extends State<ToolsScreen> {
       'title': "Insurance\nCalculator",
       'color': Colors.red,
       'calculators': ["NPS Calculator"],
+    },
+    {
+      'icon': Assets.icons.gstLink,
+      'title': "GST\nCalculator",
+      'color': Colors.lime,
+      'calculators': ["GST Calculator"],
     },
   ];
 

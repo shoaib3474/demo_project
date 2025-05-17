@@ -1,7 +1,7 @@
 import 'package:demo_project/utils/services/base_shared_preference.dart';
 import '../../models/base_calculator_model.dart';
 
-class DepreciationController {
+class SimpleInterestCtrl {
   static const String _key = 'simple_interest_result';
 
   static BaseCalculatorModel calculate({

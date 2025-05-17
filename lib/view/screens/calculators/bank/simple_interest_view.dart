@@ -30,7 +30,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
   }
 
   Future<void> _loadResult() async {
-    final model = await DepreciationController.load();
+    final model = await SimpleInterestCtrl.load();
     if (model != null) {
       context.read<BaseCalculatorProvider>().setModel(model);
     }
@@ -50,14 +50,14 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
     final rate = double.tryParse(rateCtrl.text) ?? 0;
     final time = double.tryParse(timeCtrl.text) ?? 0;
 
-    final result = DepreciationController.calculate(
+    final result = SimpleInterestCtrl.calculate(
       amount: principal,
       rate: rate,
       time: time,
       timeType: timeType,
     );
 
-    await DepreciationController.save(result);
+    await SimpleInterestCtrl.save(result);
     context.read<BaseCalculatorProvider>().setModel(result);
   }
 
@@ -65,7 +65,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
     principalCtrl.clear();
     rateCtrl.clear();
     timeCtrl.clear();
-    await DepreciationController.clear();
+    await SimpleInterestCtrl.clear();
     context.read<BaseCalculatorProvider>().clear();
 
     ScaffoldMessenger.of(

@@ -1,3 +1,4 @@
+import 'package:demo_project/view/screens/calculators/GST/GST_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/bank/compound_interest_view.dart';
 import 'package:demo_project/view/screens/calculators/bank/simple_interest_view.dart';
 import 'package:demo_project/view/screens/calculators/income%20tax/HRA_calc_view.dart';
@@ -32,4 +33,13 @@ final Map<String, Widget Function()> calculatorRouteMap = {
   "SIP Calculator": () => SIPcalcView(),
   // insurance Calculators
   "NPS Calculator": () => NPSCalcView(),
+  // Loan Calculator
+  //  "Business Loan Calculator",
+  //       "Car Loan Calculator",
+  //       "Loan Against Property",
+  //       "Home Loan Calculator",
+  //       "Personal Loan Calculator",
+
+  //GST Calculators
+  "GST Calculator": () => GSTcalcView(),
 };

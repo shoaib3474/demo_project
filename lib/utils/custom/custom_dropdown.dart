@@ -113,14 +113,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
                                       color:
                                           isSelected
                                               ? AppColors.white
-                                              : AppColors.black26,
+                                              : Colors.black,
                                     ) ??
                                     TextStyle(
                                       fontSize: 14,
                                       color:
                                           isSelected
                                               ? AppColors.white
-                                              : AppColors.black26,
+                                              : Colors.black,
                                     ),
                               ),
                               onTap: () {
