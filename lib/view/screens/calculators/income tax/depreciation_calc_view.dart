@@ -90,6 +90,7 @@ class _DepreciationCalcViewState extends State<DepreciationCalcView> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
+          spacing: 6,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /// Input Fields

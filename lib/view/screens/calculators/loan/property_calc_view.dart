@@ -87,72 +87,60 @@ class _PropertyCalcViewState extends State<PropertyCalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Loan Amount", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: loanCtrl,
-                  rightText: "₹",
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Rate of Interest (P.A)",
-                  style: AppTextStyles.body16,
-                ),
-                CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
-                  rightText: "%",
-                ),
-                const SizedBox(height: 8),
-                const Text("Loan Tenure", style: AppTextStyles.body16),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: CustomTextField(
-                        hintText: 'Years or Months',
-                        controller: timeCtrl,
-                        rightText: timeType == 'Yearly' ? "Y" : "M",
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(" Loan Amount", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: loanCtrl,
+                    rightText: "₹",
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    " Rate of Interest (P.A)",
+                    style: AppTextStyles.body16,
+                  ),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(" Loan Tenure", style: AppTextStyles.body16),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: CustomTextField(
+                          hintText: 'Years or Months',
+                          controller: timeCtrl,
+                          rightText: timeType == 'Yearly' ? "Y" : "M",
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      flex: 1,
-                      child: DropdownButtonFormField<String>(
-                        value: timeType,
-                        decoration: const InputDecoration(
-                          labelText: "Time Type",
-                          border: OutlineInputBorder(),
-                          isDense: true,
+                      const SizedBox(width: 12),
+                      SizedBox(
+                        width: 126,
+                        height: 52,
+                        child: CustomDropdown(
+                          height: 44,
+                          items: ["Yearly", "Monthly", "Quarterly"],
+                          initialValue: 'Yearly',
+                          onChanged: (val) {
+                            setState(() => timeType = val);
+                          },
                         ),
-                        items: const [
-                          DropdownMenuItem(
-                            value: 'Yearly',
-                            child: Text('Yearly'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'Monthly',
-                            child: Text('Monthly'),
-                          ),
-                        ],
-                        onChanged: (val) {
-                          if (val != null) {
-                            setState(() {
-                              timeType = val;
-                            });
-                          }
-                        },
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             if (model != null)
@@ -184,7 +172,6 @@ class _PropertyCalcViewState extends State<PropertyCalcView> {
               )
             else
               const SizedBox.shrink(),
-            const Spacer(),
           ],
         ),
       ),

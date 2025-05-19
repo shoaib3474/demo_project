@@ -86,31 +86,37 @@ class _NPSCalcViewState extends State<NPSCalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Monthly Investment", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: investmentCtrl,
-                  rightText: "₹",
-                ),
-                const SizedBox(height: 8),
-                Text("Expected return rate (P.A)", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
-                  rightText: "%",
-                ),
-                const SizedBox(height: 8),
-                Text("Your Age", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: "Years",
-                  controller: timeCtrl,
-                  rightText: "Y",
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" Monthly Investment", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: investmentCtrl,
+                    rightText: "₹",
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    " Expected return rate (P.A)",
+                    style: AppTextStyles.body16,
+                  ),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  const SizedBox(height: 8),
+                  Text(" Your Age", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: "Years",
+                    controller: timeCtrl,
+                    rightText: "Y",
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             if (model != null)
@@ -148,7 +154,6 @@ class _NPSCalcViewState extends State<NPSCalcView> {
               )
             else
               const SizedBox.shrink(),
-            const Spacer(),
           ],
         ),
       ),

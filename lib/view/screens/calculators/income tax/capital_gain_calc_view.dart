@@ -88,23 +88,24 @@ class _CapitalGainCalcViewState extends State<CapitalGainCalcView> {
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
+                  spacing: 6,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Purchase Price", style: AppTextStyles.body16),
+                    Text(" Purchase Price", style: AppTextStyles.body16),
                     CustomTextField(
                       hintText: 'Amount',
                       controller: purchaseCtrl,
                       rightText: "₹",
                     ),
                     const SizedBox(height: 12),
-                    Text("Sale Price", style: AppTextStyles.body16),
+                    Text(" Sale Price", style: AppTextStyles.body16),
                     CustomTextField(
                       hintText: 'Sale Rate',
                       controller: saleCtrl,
                       rightText: "₹",
                     ),
                     const SizedBox(height: 12),
-                    Text("Capital Gain", style: AppTextStyles.body16),
+                    Text(" Capital Gain", style: AppTextStyles.body16),
                     CustomTextField(
                       hintText: 'Gain',
                       controller: capitalGainCtrl,

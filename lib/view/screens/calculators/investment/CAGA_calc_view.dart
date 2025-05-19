@@ -86,31 +86,34 @@ class _CARGcalcViewState extends State<CARGcalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Initial Investment", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: intialInvestmentCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 2),
-                Text("Final Investment", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Final Value',
-                  controller: finalInvstCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 2),
-                Text("Time Period", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: "Years",
-                  controller: timeCtrl,
-                  rightText: "Y",
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" Initial Investment", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: intialInvestmentCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 2),
+                  Text(" Final Investment", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Final Value',
+                    controller: finalInvstCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 2),
+                  Text(" Time Period", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: "Years",
+                    controller: timeCtrl,
+                    rightText: "Y",
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             if (model != null)
@@ -137,7 +140,6 @@ class _CARGcalcViewState extends State<CARGcalcView> {
               )
             else
               SizedBox.shrink(),
-            Spacer(),
           ],
         ),
       ),

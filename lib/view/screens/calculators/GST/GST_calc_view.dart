@@ -83,37 +83,40 @@ class _GSTcalcViewState extends State<GSTcalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Amount (₹)", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Enter amount',
-                  controller: amountCtrl,
-                  rightText: "₹",
-                ),
-                const SizedBox(height: 12),
-                Text("GST Type", style: AppTextStyles.body16),
-                CustomDropdown(
-                  height: 52,
-                  items: ["Regular", "Composition"],
-                  initialValue: selectedGST,
-                  onChanged: (val) {
-                    setState(() => selectedGST = val);
-                  },
-                ),
-                const SizedBox(height: 12),
-                Text("GST Rate (%)", style: AppTextStyles.body16),
-                CustomDropdown(
-                  height: 52,
-                  items: ["0%", "5%", "8%", "12%", "18%", "28%"],
-                  initialValue: gstRate,
-                  onChanged: (val) {
-                    setState(() => gstRate = val);
-                  },
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" Amount (₹)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Enter amount',
+                    controller: amountCtrl,
+                    rightText: "₹",
+                  ),
+                  const SizedBox(height: 12),
+                  Text(" GST Type", style: AppTextStyles.body16),
+                  CustomDropdown(
+                    height: 52,
+                    items: ["Regular", "Composition"],
+                    initialValue: selectedGST,
+                    onChanged: (val) {
+                      setState(() => selectedGST = val);
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  Text(" GST Rate (%)", style: AppTextStyles.body16),
+                  CustomDropdown(
+                    height: 52,
+                    items: ["0%", "5%", "8%", "12%", "18%", "28%"],
+                    initialValue: gstRate,
+                    onChanged: (val) {
+                      setState(() => gstRate = val);
+                    },
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             if (model != null)
@@ -144,7 +147,6 @@ class _GSTcalcViewState extends State<GSTcalcView> {
               )
             else
               const SizedBox.shrink(),
-            const Spacer(),
           ],
         ),
       ),

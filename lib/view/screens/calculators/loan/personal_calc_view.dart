@@ -87,35 +87,39 @@ class _PersonalCalcViewState extends State<PersonalCalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text("Loan Amount", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: loanCtrl,
-                  rightText: "₹",
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Rate of Interest (P.A)",
-                  style: AppTextStyles.body16,
-                ),
-                CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
-                  rightText: "%",
-                ),
-                const SizedBox(height: 8),
-                const Text("Loan Tenure", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Years',
-                  controller: timeCtrl,
-                  rightText: "Y",
-                ),
-                const SizedBox(height: 8),
-                // Optional: You can add dropdown or radio buttons to change timeType if needed
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(" Loan Amount", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: loanCtrl,
+                    rightText: "₹",
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(
+                    " Rate of Interest (P.A)",
+                    style: AppTextStyles.body16,
+                  ),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  const SizedBox(height: 8),
+                  const Text(" Loan Tenure", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Years',
+                    controller: timeCtrl,
+                    rightText: "Y",
+                  ),
+                  const SizedBox(height: 8),
+                  // Optional: You can add dropdown or radio buttons to change timeType if needed
+                ],
+              ),
             ),
             const SizedBox(height: 20),
             if (model != null)
@@ -147,7 +151,6 @@ class _PersonalCalcViewState extends State<PersonalCalcView> {
               )
             else
               const SizedBox.shrink(),
-            const Spacer(),
           ],
         ),
       ),

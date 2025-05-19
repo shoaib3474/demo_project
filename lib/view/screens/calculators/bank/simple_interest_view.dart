@@ -89,51 +89,53 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(" Principal Amount", style: AppTextStyles.body16),
-
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: principalCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 2),
-                Text(" Rate of Interest(P.A)", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
-                  rightText: "%",
-                ),
-                SizedBox(height: 2),
-                Text(" Time Period", style: AppTextStyles.body16),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 250,
-                      child: CustomTextField(
-                        hintText: 'Time',
-                        controller: timeCtrl,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" Principal Amount", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: principalCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 2),
+                  Text(" Rate of Interest(P.A)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  SizedBox(height: 2),
+                  Text(" Time Period", style: AppTextStyles.body16),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 250,
+                        child: CustomTextField(
+                          hintText: 'Time',
+                          controller: timeCtrl,
+                        ),
                       ),
-                    ),
-                    Spacer(),
-                    SizedBox(
-                      width: 126,
-                      height: 52,
-                      child: CustomDropdown(
-                        height: 44,
-                        items: ["Yearly", "Monthly", "Quarterly"],
-                        initialValue: 'Yearly',
-                        onChanged: (val) {
-                          setState(() => timeType = val);
-                        },
+                      Spacer(),
+                      SizedBox(
+                        width: 126,
+                        height: 52,
+                        child: CustomDropdown(
+                          height: 44,
+                          items: ["Yearly", "Monthly", "Quarterly"],
+                          initialValue: 'Yearly',
+                          onChanged: (val) {
+                            setState(() => timeType = val);
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             if (model != null)
@@ -167,7 +169,6 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
               )
             else
               SizedBox.shrink(),
-            Spacer(),
           ],
         ),
       ),

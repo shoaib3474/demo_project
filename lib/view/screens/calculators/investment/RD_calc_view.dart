@@ -86,31 +86,34 @@ class _RDcalcViewState extends State<RDcalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              spacing: 8,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Monthly Investment", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: investmentCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 8),
-                Text("Rate of Interest (P.A)", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
-                  rightText: "%",
-                ),
-                SizedBox(height: 8),
-                Text("Time Period", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: "Years",
-                  controller: timeCtrl,
-                  rightText: "Y",
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" " + 'Monthly Investment', style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: investmentCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 8),
+                  Text(" Rate of Interest (P.A)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  SizedBox(height: 8),
+                  Text(" Time Period", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: "Years",
+                    controller: timeCtrl,
+                    rightText: "Y",
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             if (model != null)
@@ -144,7 +147,6 @@ class _RDcalcViewState extends State<RDcalcView> {
               )
             else
               SizedBox.shrink(),
-            Spacer(),
           ],
         ),
       ),

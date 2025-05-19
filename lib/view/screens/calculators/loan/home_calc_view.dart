@@ -89,85 +89,72 @@ class _HomeCalcViewState extends State<HomeCalcView> {
         onShare: () {},
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Loan Amount", style: AppTextStyles.body16),
-              CustomTextField(
-                hintText: 'Amount',
-                controller: loanCtrl,
-                rightText: "₹",
-              ),
-              const SizedBox(height: 8),
-              Text("Rate of Interest (P.A)", style: AppTextStyles.body16),
-              CustomTextField(
-                hintText: 'Interest Rate',
-                controller: rateCtrl,
-                rightText: "%",
-              ),
-              const SizedBox(height: 8),
-              Text("Loan Tenure (Years)", style: AppTextStyles.body16),
-              CustomTextField(
-                hintText: 'Years',
-                controller: timeCtrl,
-                rightText: "Y",
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child:
-                    model == null
-                        ? const SizedBox.shrink()
-                        : ResultChart(
-                          dataEntries: [
-                            ChartData(
-                              value: model.amount,
-                              color: AppColors.secondary,
-                              label: 'Loan Amount',
-                            ),
-                            ChartData(
-                              value: model.result2 ?? 0.0,
-                              color: AppColors.primary,
-                              label: 'Interest Amount',
-                            ),
-                          ],
-                          summaryRows: [
-                            SummaryRowData(
-                              label: "Loan Amount",
-                              value: model.amount,
-                            ),
-                            SummaryRowData(
-                              label: "EMI",
-                              value: model.result1 ?? 0.0,
-                            ),
-                            SummaryRowData(
-                              label: "Interest Amount",
-                              value: model.result2 ?? 0.0,
-                            ),
-                            SummaryRowData(
-                              label: "Total Amount Payable",
-                              value: model.result3 ?? 0.0,
-                            ),
-                          ],
-                        ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ElevatedButton(
-                    onPressed: _onClear,
-                    child: const Text('Clear'),
+                  Text(" Loan Amount", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: loanCtrl,
+                    rightText: "₹",
                   ),
-                  ElevatedButton(
-                    onPressed: _onCalculate,
-                    child: const Text('Calculate'),
+                  const SizedBox(height: 8),
+                  Text(" Rate of Interest (P.A)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  const SizedBox(height: 8),
+                  Text(" Loan Tenure (Years)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Years',
+                    controller: timeCtrl,
+                    rightText: "Y",
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+            const SizedBox(height: 20),
+            model == null
+                ? const SizedBox.shrink()
+                : ResultChart(
+                  dataEntries: [
+                    ChartData(
+                      value: model.amount,
+                      color: AppColors.secondary,
+                      label: 'Loan Amount',
+                    ),
+                    ChartData(
+                      value: model.result2 ?? 0.0,
+                      color: AppColors.primary,
+                      label: 'Interest Amount',
+                    ),
+                  ],
+                  summaryRows: [
+                    SummaryRowData(label: "Loan Amount", value: model.amount),
+                    SummaryRowData(label: "EMI", value: model.result1 ?? 0.0),
+                    SummaryRowData(
+                      label: "Interest Amount",
+                      value: model.result2 ?? 0.0,
+                    ),
+                    SummaryRowData(
+                      label: "Total Amount Payable",
+                      value: model.result3 ?? 0.0,
+                    ),
+                  ],
+                ),
+          ],
         ),
+      ),
+      bottomSheet: ClearCalculateButtons(
+        onCalculatePressed: _onCalculate,
+        onClearPressed: _onClear,
       ),
     );
   }

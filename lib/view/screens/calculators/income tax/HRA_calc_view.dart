@@ -94,38 +94,41 @@ class _HRAcalcViewState extends State<HRAcalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              spacing: 6,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Total Investment", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: totalInvstCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 8),
-                Text("HRA Received (P.A)", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: HRA_ReceivedCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 8),
-                Text("Dearness Allowance", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: DearnessCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 8),
-                Text("Total Rent Paid", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: totalRentCtrl,
-                  rightText: "₹",
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 6,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" Total Investment", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: totalInvstCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 8),
+                  Text("HRA Received (P.A)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: HRA_ReceivedCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 8),
+                  Text(" Dearness Allowance", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: DearnessCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 8),
+                  Text(" Total Rent Paid", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: totalRentCtrl,
+                    rightText: "₹",
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             if (model != null)
@@ -157,8 +160,6 @@ class _HRAcalcViewState extends State<HRAcalcView> {
               )
             else
               SizedBox.shrink(),
-
-            Spacer(),
           ],
         ),
       ),

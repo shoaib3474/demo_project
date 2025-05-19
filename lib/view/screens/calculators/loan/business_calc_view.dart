@@ -75,6 +75,7 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
     final model = context.watch<BaseCalculatorProvider>().model;
 
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(
         title: 'Business Loan Calculator',
@@ -82,14 +83,17 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
         onDownload: () {}, // Add download logic
         onShare: () {}, // Add share logic
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Expanded(
-              child: ListView(
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 8,
                 children: [
-                  Text("Loan Amount", style: AppTextStyles.body16),
+                  Text(" Loan Amount", style: AppTextStyles.body16),
                   CustomTextField(
                     controller: loanCtrl,
                     hintText: 'Enter amount',
@@ -98,7 +102,7 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
                   ),
                   const SizedBox(height: 12),
 
-                  Text("Rate of Interest (P.A)", style: AppTextStyles.body16),
+                  Text(" Rate of Interest (P.A)", style: AppTextStyles.body16),
                   CustomTextField(
                     controller: rateCtrl,
                     hintText: 'Enter interest rate',
@@ -107,7 +111,7 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
                   ),
                   const SizedBox(height: 12),
 
-                  Text("Time Period", style: AppTextStyles.body16),
+                  Text(" Time Period", style: AppTextStyles.body16),
                   CustomTextField(
                     controller: timeCtrl,
                     hintText: 'Enter time in years',
@@ -154,12 +158,12 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
                 ],
               ),
             ),
-            ClearCalculateButtons(
-              onClearPressed: _onClear,
-              onCalculatePressed: _onCalculate,
-            ),
           ],
         ),
+      ),
+      bottomSheet: ClearCalculateButtons(
+        onClearPressed: _onClear,
+        onCalculatePressed: _onCalculate,
       ),
     );
   }

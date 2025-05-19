@@ -87,30 +87,34 @@ class _CarCalcViewState extends State<CarCalcView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(" Loan Amount", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Amount',
-                  controller: loanCtrl,
-                  rightText: "₹",
-                ),
-                SizedBox(height: 2),
-                Text(" Rate of Interest (P.A)", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Interest Rate',
-                  controller: rateCtrl,
-                  rightText: "%",
-                ),
-                SizedBox(height: 2),
-                Text(" Loan Tenure", style: AppTextStyles.body16),
-                CustomTextField(
-                  hintText: 'Years',
-                  controller: timeCtrl,
-                  rightText: "Y",
-                ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                spacing: 8,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(" Loan Amount", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Amount',
+                    controller: loanCtrl,
+                    rightText: "₹",
+                  ),
+                  SizedBox(height: 2),
+                  Text(" Rate of Interest (P.A)", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Interest Rate',
+                    controller: rateCtrl,
+                    rightText: "%",
+                  ),
+                  SizedBox(height: 2),
+                  Text(" Loan Tenure", style: AppTextStyles.body16),
+                  CustomTextField(
+                    hintText: 'Years',
+                    controller: timeCtrl,
+                    rightText: "Y",
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             if (model != null)
@@ -142,7 +146,6 @@ class _CarCalcViewState extends State<CarCalcView> {
               )
             else
               SizedBox.shrink(),
-            Spacer(),
           ],
         ),
       ),
