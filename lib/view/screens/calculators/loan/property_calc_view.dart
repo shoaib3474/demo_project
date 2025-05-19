@@ -84,11 +84,10 @@ class _PropertyCalcViewState extends State<PropertyCalcView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text("Loan Amount", style: AppTextStyles.body16),
@@ -155,39 +154,39 @@ class _PropertyCalcViewState extends State<PropertyCalcView> {
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount,
-                  color: AppColors.secondary,
-                  label: 'Loan Amount',
-                ),
-                ChartData(
-                  value: model.result2 ?? 0.0, // Interest amount
-                  color: AppColors.primary,
-                  label: 'Interest Amount',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(label: "Loan Amount", value: model.amount),
-                SummaryRowData(label: "EMI", value: model.result1 ?? 0.0),
-                SummaryRowData(
-                  label: "Interest Amount",
-                  value: model.result2 ?? 0.0,
-                ),
-                SummaryRowData(
-                  label: "Total Amount Payable",
-                  value: model.result3 ?? 0.0,
-                ),
-              ],
-            )
-          else
-            const SizedBox.shrink(),
-          const Spacer(),
-        ],
+            const SizedBox(height: 20),
+            if (model != null)
+              ResultChart(
+                dataEntries: [
+                  ChartData(
+                    value: model.amount,
+                    color: AppColors.secondary,
+                    label: 'Loan Amount',
+                  ),
+                  ChartData(
+                    value: model.result2 ?? 0.0, // Interest amount
+                    color: AppColors.primary,
+                    label: 'Interest Amount',
+                  ),
+                ],
+                summaryRows: [
+                  SummaryRowData(label: "Loan Amount", value: model.amount),
+                  SummaryRowData(label: "EMI", value: model.result1 ?? 0.0),
+                  SummaryRowData(
+                    label: "Interest Amount",
+                    value: model.result2 ?? 0.0,
+                  ),
+                  SummaryRowData(
+                    label: "Total Amount Payable",
+                    value: model.result3 ?? 0.0,
+                  ),
+                ],
+              )
+            else
+              const SizedBox.shrink(),
+            const Spacer(),
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,

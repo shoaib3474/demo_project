@@ -13,6 +13,10 @@ import 'package:demo_project/view/screens/calculators/investment/SIP_calc_view.d
 import 'package:demo_project/view/screens/calculators/investment/lump_sum_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/post_office_MIS_view.dart';
 import 'package:demo_project/view/screens/calculators/loan/business_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/loan/car_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/loan/home_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/loan/personal_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/loan/property_calc_view.dart';
 import 'package:flutter/material.dart';
 // Import all required calculator views...
 
@@ -36,10 +40,10 @@ final Map<String, Widget Function()> calculatorRouteMap = {
   "NPS Calculator": () => NPSCalcView(),
   // Loan Calculator
   "Business Loan Calculator": () => BusinessCalcView(),
-  //       "Car Loan Calculator",
-  //       "Loan Against Property",
-  //       "Home Loan Calculator",
-  //       "Personal Loan Calculator",
+  "Car Loan Calculator": () => CarCalcView(),
+  "Loan Against Property": () => PropertyCalcView(),
+  "Home Loan Calculator": () => HomeCalcView(),
+  "Personal Loan Calculator": () => PersonalCalcView(),
 
   //GST Calculators
   "GST Calculator": () => GSTcalcView(),
