@@ -92,11 +92,10 @@ class _TaxtCalcViewState extends State<TaxtCalcView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               spacing: 6,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -130,37 +129,40 @@ class _TaxtCalcViewState extends State<TaxtCalcView> {
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.result1 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'HRA Exempted',
-                ),
-                ChartData(
-                  value: model.result2 ?? 0.0,
-                  color: AppColors.secondary,
-                  label: 'HRA Taxable',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(label: "HRA", value: model.rate),
-                SummaryRowData(label: "Exemption", value: model.result1 ?? 0.0),
-                SummaryRowData(
-                  label: "50 % Basic",
-                  value: model.result3 ?? 0.0,
-                ),
-                SummaryRowData(label: "Salary", value: model.result4 ?? 0.0),
-              ],
-            )
-          else
-            SizedBox.shrink(),
+            SizedBox(height: 20),
+            if (model != null)
+              ResultChart(
+                dataEntries: [
+                  ChartData(
+                    value: model.result1 ?? 0.0,
+                    color: AppColors.primary,
+                    label: 'HRA Exempted',
+                  ),
+                  ChartData(
+                    value: model.result2 ?? 0.0,
+                    color: AppColors.secondary,
+                    label: 'HRA Taxable',
+                  ),
+                ],
+                summaryRows: [
+                  SummaryRowData(label: "HRA", value: model.rate),
+                  SummaryRowData(
+                    label: "Exemption",
+                    value: model.result1 ?? 0.0,
+                  ),
+                  SummaryRowData(
+                    label: "50 % Basic",
+                    value: model.result3 ?? 0.0,
+                  ),
+                  SummaryRowData(label: "Salary", value: model.result4 ?? 0.0),
+                ],
+              )
+            else
+              SizedBox.shrink(),
 
-          Spacer(),
-        ],
+            Spacer(),
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,

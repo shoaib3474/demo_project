@@ -12,6 +12,7 @@ import 'package:demo_project/view/screens/calculators/investment/RD_calc_view.da
 import 'package:demo_project/view/screens/calculators/investment/SIP_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/lump_sum_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/post_office_MIS_view.dart';
+import 'package:demo_project/view/screens/calculators/loan/business_calc_view.dart';
 import 'package:flutter/material.dart';
 // Import all required calculator views...
 
@@ -34,7 +35,7 @@ final Map<String, Widget Function()> calculatorRouteMap = {
   // insurance Calculators
   "NPS Calculator": () => NPSCalcView(),
   // Loan Calculator
-  //  "Business Loan Calculator",
+  "Business Loan Calculator": () => BusinessCalcView(),
   //       "Car Loan Calculator",
   //       "Loan Against Property",
   //       "Home Loan Calculator",

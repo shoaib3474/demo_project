@@ -83,11 +83,10 @@ class _CARGcalcViewState extends State<CARGcalcView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,31 +112,34 @@ class _CARGcalcViewState extends State<CARGcalcView> {
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount,
-                  color: AppColors.secondary,
-                  label: 'Initial Investment',
-                ),
-                ChartData(
-                  value: model.result2 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'Final Investment',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(label: "CARG Gain", value: model.result1 ?? 0.0),
-                SummaryRowData(label: "CARG %", value: model.result3 ?? 0.0),
-              ],
-            )
-          else
-            SizedBox.shrink(),
-          Spacer(),
-        ],
+            SizedBox(height: 20),
+            if (model != null)
+              ResultChart(
+                dataEntries: [
+                  ChartData(
+                    value: model.amount,
+                    color: AppColors.secondary,
+                    label: 'Initial Investment',
+                  ),
+                  ChartData(
+                    value: model.result2 ?? 0.0,
+                    color: AppColors.primary,
+                    label: 'Final Investment',
+                  ),
+                ],
+                summaryRows: [
+                  SummaryRowData(
+                    label: "CARG Gain",
+                    value: model.result1 ?? 0.0,
+                  ),
+                  SummaryRowData(label: "CARG %", value: model.result3 ?? 0.0),
+                ],
+              )
+            else
+              SizedBox.shrink(),
+            Spacer(),
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,

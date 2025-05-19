@@ -80,11 +80,10 @@ class _GSTcalcViewState extends State<GSTcalcView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -116,38 +115,38 @@ class _GSTcalcViewState extends State<GSTcalcView> {
                 ),
               ],
             ),
-          ),
-          const SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount,
-                  color: AppColors.secondary,
-                  label: 'Actual Amount',
-                ),
-                ChartData(
-                  value: model.result1 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'GST Amount',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(label: "Actual Amount", value: model.amount),
-                SummaryRowData(
-                  label: "GST Amount",
-                  value: model.result1 ?? 0.0,
-                ),
-                SummaryRowData(
-                  label: "Post GST Amount",
-                  value: model.result2 ?? 0.0,
-                ),
-              ],
-            )
-          else
-            const SizedBox.shrink(),
-          const Spacer(),
-        ],
+            const SizedBox(height: 20),
+            if (model != null)
+              ResultChart(
+                dataEntries: [
+                  ChartData(
+                    value: model.amount,
+                    color: AppColors.secondary,
+                    label: 'Actual Amount',
+                  ),
+                  ChartData(
+                    value: model.result1 ?? 0.0,
+                    color: AppColors.primary,
+                    label: 'GST Amount',
+                  ),
+                ],
+                summaryRows: [
+                  SummaryRowData(label: "Actual Amount", value: model.amount),
+                  SummaryRowData(
+                    label: "GST Amount",
+                    value: model.result1 ?? 0.0,
+                  ),
+                  SummaryRowData(
+                    label: "Post GST Amount",
+                    value: model.result2 ?? 0.0,
+                  ),
+                ],
+              )
+            else
+              const SizedBox.shrink(),
+            const Spacer(),
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,

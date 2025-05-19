@@ -84,11 +84,10 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -134,41 +133,41 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount,
-                  color: AppColors.secondary,
-                  label: 'Principal Amount',
-                ),
-                ChartData(
-                  value: model.result1 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'Interest Amount',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(
-                  label: "Principle Amount",
-                  value: double.tryParse(principalCtrl.text) ?? 0.0,
-                ),
-                SummaryRowData(
-                  label: "Total Earned",
-                  value: model.result1 ?? 0.0,
-                ),
-                SummaryRowData(
-                  label: "Total Amount",
-                  value: (model.amount + (model.result1 ?? 0.0)),
-                ),
-              ],
-            )
-          else
-            SizedBox.shrink(),
-          Spacer(),
-        ],
+            SizedBox(height: 20),
+            if (model != null)
+              ResultChart(
+                dataEntries: [
+                  ChartData(
+                    value: model.amount,
+                    color: AppColors.secondary,
+                    label: 'Principal Amount',
+                  ),
+                  ChartData(
+                    value: model.result1 ?? 0.0,
+                    color: AppColors.primary,
+                    label: 'Interest Amount',
+                  ),
+                ],
+                summaryRows: [
+                  SummaryRowData(
+                    label: "Principle Amount",
+                    value: double.tryParse(principalCtrl.text) ?? 0.0,
+                  ),
+                  SummaryRowData(
+                    label: "Total Earned",
+                    value: model.result1 ?? 0.0,
+                  ),
+                  SummaryRowData(
+                    label: "Total Amount",
+                    value: (model.amount + (model.result1 ?? 0.0)),
+                  ),
+                ],
+              )
+            else
+              SizedBox.shrink(),
+            Spacer(),
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,

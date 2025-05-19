@@ -83,11 +83,10 @@ class _PostOfficeMISViewState extends State<PostOfficeMISView> {
         onDownload: () {},
         onShare: () {},
       ),
-      body: Column(
-        children: [
-          SingleChildScrollView(
-            padding: EdgeInsets.all(16),
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Column(
               spacing: 8,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -113,41 +112,41 @@ class _PostOfficeMISViewState extends State<PostOfficeMISView> {
                 ),
               ],
             ),
-          ),
-          SizedBox(height: 20),
-          if (model != null)
-            ResultChart(
-              dataEntries: [
-                ChartData(
-                  value: model.amount,
-                  color: AppColors.secondary,
-                  label: 'Invested Amount',
-                ),
-                ChartData(
-                  value: model.result2 ?? 0.0,
-                  color: AppColors.primary,
-                  label: 'Total Interest',
-                ),
-              ],
-              summaryRows: [
-                SummaryRowData(
-                  label: "Monthly Interest",
-                  value: model.result1 ?? 0.0,
-                ),
-                SummaryRowData(
-                  label: "Total Interest",
-                  value: (model.result2 ?? 0.0),
-                ),
-                SummaryRowData(
-                  label: "Total Amount Payable",
-                  value: (model.result3 ?? 0.0),
-                ),
-              ],
-            )
-          else
-            SizedBox.shrink(),
-          Spacer(),
-        ],
+            SizedBox(height: 20),
+            if (model != null)
+              ResultChart(
+                dataEntries: [
+                  ChartData(
+                    value: model.amount,
+                    color: AppColors.secondary,
+                    label: 'Invested Amount',
+                  ),
+                  ChartData(
+                    value: model.result2 ?? 0.0,
+                    color: AppColors.primary,
+                    label: 'Total Interest',
+                  ),
+                ],
+                summaryRows: [
+                  SummaryRowData(
+                    label: "Monthly Interest",
+                    value: model.result1 ?? 0.0,
+                  ),
+                  SummaryRowData(
+                    label: "Total Interest",
+                    value: (model.result2 ?? 0.0),
+                  ),
+                  SummaryRowData(
+                    label: "Total Amount Payable",
+                    value: (model.result3 ?? 0.0),
+                  ),
+                ],
+              )
+            else
+              SizedBox.shrink(),
+            Spacer(),
+          ],
+        ),
       ),
       bottomSheet: ClearCalculateButtons(
         onClearPressed: _onClear,
