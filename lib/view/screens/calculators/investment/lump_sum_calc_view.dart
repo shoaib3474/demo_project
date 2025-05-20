@@ -148,7 +148,7 @@ class _LumpSumCalcViewState extends State<LumpSumCalcView> {
                 ],
               )
             else
-              const SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

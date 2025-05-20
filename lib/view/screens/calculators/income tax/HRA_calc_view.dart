@@ -159,7 +159,7 @@ class _HRAcalcViewState extends State<HRAcalcView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

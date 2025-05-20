@@ -168,7 +168,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

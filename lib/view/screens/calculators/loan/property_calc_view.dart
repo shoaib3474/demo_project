@@ -171,7 +171,7 @@ class _PropertyCalcViewState extends State<PropertyCalcView> {
                 ],
               )
             else
-              const SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

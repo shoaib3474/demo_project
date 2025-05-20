@@ -139,7 +139,7 @@ class _CARGcalcViewState extends State<CARGcalcView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

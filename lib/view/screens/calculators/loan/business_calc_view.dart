@@ -153,7 +153,10 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+
+                    SizedBox(
+                      height: 80 + MediaQuery.of(context).padding.bottom,
+                    ),
                   ],
                 ],
               ),

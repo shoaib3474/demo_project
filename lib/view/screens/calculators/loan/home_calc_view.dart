@@ -122,7 +122,7 @@ class _HomeCalcViewState extends State<HomeCalcView> {
             ),
             const SizedBox(height: 20),
             model == null
-                ? const SizedBox.shrink()
+                ? SizedBox(height: 80 + MediaQuery.of(context).padding.bottom)
                 : ResultChart(
                   dataEntries: [
                     ChartData(

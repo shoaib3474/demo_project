@@ -146,7 +146,7 @@ class _GSTcalcViewState extends State<GSTcalcView> {
                 ],
               )
             else
-              const SizedBox.shrink(),
+              const SizedBox(height: 80),
           ],
         ),
       ),

@@ -167,7 +167,7 @@ class _CompoundInterestViewState extends State<CompoundInterestView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

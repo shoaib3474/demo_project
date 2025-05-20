@@ -112,35 +112,38 @@ class _CapitalGainCalcViewState extends State<CapitalGainCalcView> {
                       rightText: "₹",
                     ),
                     const SizedBox(height: 20),
-                    if (model != null)
-                      ResultChart(
-                        dataEntries: [
-                          ChartData(
-                            value: model.amount,
-                            color: AppColors.secondary,
-                            label: 'Purchase Price',
-                          ),
-                          ChartData(
-                            value: model.result1 ?? 0.0,
-                            color: AppColors.primary,
-                            label: 'Capital Gain',
-                          ),
-                        ],
-                        summaryRows: [
-                          SummaryRowData(
-                            label: "Purchase Price",
-                            value: model.amount,
-                          ),
-                          SummaryRowData(
-                            label: "Capital Gain",
-                            value: model.result1 ?? 0.0,
-                          ),
-                          SummaryRowData(
-                            label: "Sale Price",
-                            value: model.rate,
-                          ),
-                        ],
-                      ),
+                    (model != null)
+                        ? ResultChart(
+                          dataEntries: [
+                            ChartData(
+                              value: model.amount,
+                              color: AppColors.secondary,
+                              label: 'Purchase Price',
+                            ),
+                            ChartData(
+                              value: model.result1 ?? 0.0,
+                              color: AppColors.primary,
+                              label: 'Capital Gain',
+                            ),
+                          ],
+                          summaryRows: [
+                            SummaryRowData(
+                              label: "Purchase Price",
+                              value: model.amount,
+                            ),
+                            SummaryRowData(
+                              label: "Capital Gain",
+                              value: model.result1 ?? 0.0,
+                            ),
+                            SummaryRowData(
+                              label: "Sale Price",
+                              value: model.rate,
+                            ),
+                          ],
+                        )
+                        : SizedBox(
+                          height: 80 + MediaQuery.of(context).padding.bottom,
+                        ),
                   ],
                 ),
               ),

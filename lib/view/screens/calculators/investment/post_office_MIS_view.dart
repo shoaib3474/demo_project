@@ -149,7 +149,7 @@ class _PostOfficeMISViewState extends State<PostOfficeMISView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

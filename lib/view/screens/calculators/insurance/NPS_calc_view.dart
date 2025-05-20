@@ -153,7 +153,7 @@ class _NPSCalcViewState extends State<NPSCalcView> {
                 ],
               )
             else
-              const SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

@@ -166,7 +166,7 @@ class _FDcalcViewState extends State<FDcalcView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

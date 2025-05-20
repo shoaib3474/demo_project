@@ -150,7 +150,7 @@ class _PersonalCalcViewState extends State<PersonalCalcView> {
                 ],
               )
             else
-              const SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),

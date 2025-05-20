@@ -158,7 +158,7 @@ class _TaxtCalcViewState extends State<TaxtCalcView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
 
             Spacer(),
           ],

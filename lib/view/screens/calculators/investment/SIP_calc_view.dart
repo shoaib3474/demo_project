@@ -163,7 +163,7 @@ class _SIPcalcViewState extends State<SIPcalcView> {
                 ],
               )
             else
-              SizedBox.shrink(),
+              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
           ],
         ),
       ),
