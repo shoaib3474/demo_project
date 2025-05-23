@@ -1,4 +1,6 @@
 // ignore: file_names
+// ignore_for_file: file_names, duplicate_ignore
+
 import 'dart:math';
 
 import 'package:demo_project/utils/services/base_shared_preference.dart';

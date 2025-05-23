@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names, file_names
 
 import 'package:demo_project/controller/income_tax_ctrls/HRA_ctrlr.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';

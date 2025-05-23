@@ -1,4 +1,6 @@
-import 'package:demo_project/utils/services/base_shared_preference.dart';
+// ignore_for_file: file_names
+
+import '../../utils/services/base_shared_preference.dart';
 import '../../models/base_calculator_model.dart';
 
 class HRAController {

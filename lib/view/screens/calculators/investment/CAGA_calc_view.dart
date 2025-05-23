@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, file_names
 
 import 'package:demo_project/controller/investment_ctrls/CARG_ctrls.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';

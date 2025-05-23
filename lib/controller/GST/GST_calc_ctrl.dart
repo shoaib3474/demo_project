@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:demo_project/models/base_calculator_model.dart';
 import 'package:demo_project/utils/services/base_shared_preference.dart';
 
