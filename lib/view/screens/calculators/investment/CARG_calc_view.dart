@@ -135,7 +135,13 @@ class _CARGcalcViewState extends State<CARGcalcView> {
                     label: "CARG Gain",
                     value: model.result1 ?? 0.0,
                   ),
-                  SummaryRowData(label: "CARG %", value: model.result3 ?? 0.0),
+                  SummaryRowData(
+                    label: "CARG  %",
+                    percentage:
+                        model.result3 != null
+                            ? "₹${(model.result3! * 100 / 100).toStringAsFixed(2)}% (P.A)"
+                            : "₹0.00% (P.A)",
+                  ),
                 ],
               )
             else

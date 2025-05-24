@@ -6,7 +6,7 @@ import 'package:demo_project/view/screens/calculators/income%20tax/capital_gain_
 import 'package:demo_project/view/screens/calculators/income%20tax/depreciation_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/income%20tax/tax_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/insurance/NPS_calc_view.dart';
-import 'package:demo_project/view/screens/calculators/investment/CAGA_calc_view.dart';
+import 'package:demo_project/view/screens/calculators/investment/CARG_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/FD_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/RD_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/investment/SIP_calc_view.dart';

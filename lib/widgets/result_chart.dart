@@ -84,7 +84,11 @@ class ResultChart extends StatelessWidget {
                   summaryRows.map((row) {
                     return Column(
                       children: [
-                        SummaryRow(label: row.label, value: row.value),
+                        SummaryRow(
+                          label: row.label,
+                          value: row.value,
+                          percentage: row.percentage,
+                        ),
                         const Divider(),
                       ],
                     );
@@ -107,9 +111,10 @@ class ChartData {
 
 class SummaryRowData {
   final String label;
-  final double value;
+  final double? value;
+  final String? percentage;
 
-  SummaryRowData({required this.label, required this.value});
+  SummaryRowData({required this.label, this.value, this.percentage});
 }
 
 class LegendItem extends StatelessWidget {
@@ -134,9 +139,10 @@ class LegendItem extends StatelessWidget {
 
 class SummaryRow extends StatelessWidget {
   final String label;
-  final double value;
+  final double? value;
+  final String? percentage;
 
-  const SummaryRow({required this.label, required this.value, Key? key})
+  const SummaryRow({required this.label, this.value, this.percentage, Key? key})
     : super(key: key);
 
   @override
@@ -144,10 +150,16 @@ class SummaryRow extends StatelessWidget {
     return Row(
       children: [
         Expanded(child: Text(label, style: AppTextStyles.body16)),
-        Text(
-          '₹ ${value.toStringAsFixed(0)}',
-          style: AppTextStyles.heading20.copyWith(color: AppColors.primary),
-        ),
+        if (percentage != null)
+          Text(
+            percentage!,
+            style: AppTextStyles.heading20.copyWith(color: AppColors.primary),
+          )
+        else if (value != null)
+          Text(
+            '₹ ${value!.toStringAsFixed(0)}',
+            style: AppTextStyles.heading20.copyWith(color: AppColors.primary),
+          ),
       ],
     );
   }
