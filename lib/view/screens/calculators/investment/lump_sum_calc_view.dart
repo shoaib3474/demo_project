@@ -134,13 +134,14 @@ class _LumpSumCalcViewState extends State<LumpSumCalcView> {
                 ],
                 summaryRows: [
                   SummaryRowData(
-                    label: "Interest Earned",
-                    value: (model.result2 ?? 0),
-                  ),
-                  SummaryRowData(
                     label: "Invested Amount",
                     value: (model.amount),
                   ),
+                  SummaryRowData(
+                    label: "Interest Earned",
+                    value: (model.result2 ?? 0),
+                  ),
+
                   SummaryRowData(
                     label: "Total Value",
                     value: (model.result1 ?? 0),

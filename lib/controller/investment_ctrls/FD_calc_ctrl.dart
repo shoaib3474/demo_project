@@ -1,7 +1,4 @@
-// ignore_for_file: file_names
-
 import 'dart:math';
-
 import 'package:demo_project/models/base_calculator_model.dart';
 import 'package:demo_project/utils/services/base_shared_preference.dart';
 
@@ -17,8 +14,8 @@ class FDController {
     required double rate,
     required double time,
   }) {
-    final r = rate / 100;
-    final n = 1; // Compounded yearly (you can adjust for monthly/quarterly)
+    final r = rate / 100; // Convert rate to decimal
+    final n = 1; // Compounded annually
     final maturityAmount = amount * pow((1 + r / n), n * time);
     final interestEarned = maturityAmount - amount;
 

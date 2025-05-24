@@ -8,7 +8,7 @@ import 'package:demo_project/utils/services/base_shared_preference.dart';
 class RDController {
   static const String _key = 'rd_calculator_result';
 
-  /// Calculate Recursive Deposit maturity amount
+  /// Calculate Recurring Deposit maturity amount
   /// amount = monthly investment
   /// rate = annual interest rate (percent)
   /// time = years
@@ -17,24 +17,18 @@ class RDController {
     required double rate,
     required double time,
   }) {
-    final monthlyRate = rate / 12 / 100;
-    final months = time * 12;
+    final months = (time * 12).round();
+    final r = rate / 100;
 
-    double maturityAmount;
-    if (monthlyRate > 0) {
-      maturityAmount =
-          amount * (pow(1 + monthlyRate, months) - 1) / monthlyRate;
-    } else {
-      maturityAmount = amount * months;
-    }
-
+    // Indian RD formula (approximate, matches most online calculators)
     final investedAmount = amount * months;
-    final interestEarned = maturityAmount - investedAmount;
+    final interestEarned = amount * months * (months + 1) / 2 * (r / 12);
+    final maturityAmount = investedAmount + interestEarned;
 
     return BaseCalculatorModel(
-      amount: investedAmount,
-      result1: maturityAmount,
-      result2: interestEarned,
+      amount: investedAmount, // Invested Amount
+      result1: maturityAmount, // Total Amount (Maturity)
+      result2: interestEarned, // Returns (Total Interest)
       rate: rate,
       time: time,
     );
