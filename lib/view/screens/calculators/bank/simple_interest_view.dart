@@ -2,6 +2,7 @@
 
 import 'package:demo_project/controller/bank_ctrls/simple_interest_controller.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
+import 'package:demo_project/utils/services/export_helper.dart';
 import 'package:demo_project/utils/utils.dart';
 
 import 'package:demo_project/view/screens/textfield.dart';
@@ -22,6 +23,7 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
   final rateCtrl = TextEditingController();
   final timeCtrl = TextEditingController();
   String timeType = 'Yearly';
+  final GlobalKey exportKey = GlobalKey();
 
   @override
   void initState() {
@@ -139,36 +141,47 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
             ),
             SizedBox(height: 20),
             if (model != null)
-              ResultChart(
-                dataEntries: [
-                  ChartData(
-                    value: model.amount,
-                    color: AppColors.secondary,
-                    label: 'Principal Amount',
-                  ),
-                  ChartData(
-                    value: model.result1 ?? 0.0,
-                    color: AppColors.primary,
-                    label: 'Interest Amount',
-                  ),
-                ],
-                summaryRows: [
-                  SummaryRowData(
-                    label: "Principle Amount",
-                    value: double.tryParse(principalCtrl.text) ?? 0.0,
-                  ),
-                  SummaryRowData(
-                    label: "Total Earned",
-                    value: model.result1 ?? 0.0,
-                  ),
-                  SummaryRowData(
-                    label: "Total Amount",
-                    value: (model.amount + (model.result1 ?? 0.0)),
+              Column(
+                children: [
+                  RepaintBoundary(
+                    key: exportKey,
+                    child: ResultChart(
+                      dataEntries: [
+                        ChartData(
+                          value: model.amount,
+                          color: AppColors.secondary,
+                          label: 'Principal Amount',
+                        ),
+                        ChartData(
+                          value: model.result1 ?? 0.0,
+                          color: AppColors.primary,
+                          label: 'Interest Amount',
+                        ),
+                      ],
+                      summaryRows: [
+                        SummaryRowData(
+                          label: "Principle Amount",
+                          value: double.tryParse(principalCtrl.text) ?? 0.0,
+                        ),
+                        SummaryRowData(
+                          label: "Total Earned",
+                          value: model.result1 ?? 0.0,
+                        ),
+                        SummaryRowData(
+                          label: "Total Amount",
+                          value: (model.amount + (model.result1 ?? 0.0)),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               )
             else
               SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
+            ExportButtons(
+              exportKey: exportKey,
+              fileName: "simple_interest_calculator",
+            ),
           ],
         ),
       ),

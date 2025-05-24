@@ -1,4 +1,4 @@
-import 'package:demo_project/view/screens/tools_screen.dart';
+import 'package:demo_project/view/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_project/utils/custom/custom_appbar.dart';
 import 'package:demo_project/utils/custom/custom_nav.dart';
@@ -20,8 +20,9 @@ class _LandingScreenState extends State<LandingScreen> {
     'More',
   ]; // Adjust based on your tabs
   final List<Widget> _pages = [
+    HomeScreen(),
     Center(child: Text('Home Page')),
-    ToolsScreen(),
+
     Center(child: Text('Blogs')),
     Center(child: Text('More')),
   ];

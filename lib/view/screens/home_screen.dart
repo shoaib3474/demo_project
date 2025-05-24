@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 import '../../utils/utils.dart';
 import 'package:flutter_svg/svg.dart';
 
-class ToolsScreen extends StatefulWidget {
-  const ToolsScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<ToolsScreen> createState() => _ToolsScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _ToolsScreenState extends State<ToolsScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> _tools = [
     {
       'icon': Assets.icons.itr,
@@ -143,25 +143,44 @@ class _ToolsScreenState extends State<ToolsScreen> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(12),
-      child: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-        childAspectRatio: 1.1,
-        children:
-            _tools.map((tool) {
-              return CalculatorCard(
-                icon: tool['icon'],
-                iconColor: tool['color'],
-                title: tool['title'],
-                onTap:
-                    () => _showBottomSheet(
-                      context,
-                      tool['calculators'],
-                      tool['title'],
-                    ),
-              );
-            }).toList(),
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(12),
+            height: 50,
+            width: 180,
+            decoration: BoxDecoration(
+              color: Colors.lightBlue,
+              borderRadius: BorderRadius.circular(52),
+            ),
+            child: Center(
+              child: Text(
+                "Calculators",
+                style: AppTextStyles.body16.copyWith(color: AppColors.white),
+              ),
+            ),
+          ),
+          Expanded(
+            child: GridView.count(
+              crossAxisCount: 3,
+
+              children:
+                  _tools.map((tool) {
+                    return CalculatorCard(
+                      icon: tool['icon'],
+                      iconColor: tool['color'],
+                      title: tool['title'],
+                      onTap:
+                          () => _showBottomSheet(
+                            context,
+                            tool['calculators'],
+                            tool['title'],
+                          ),
+                    );
+                  }).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }
