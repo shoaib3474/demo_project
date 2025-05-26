@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:demo_project/providers/base_calculator_provider.dart';
+
+// Import all views
 import 'package:demo_project/view/screens/calculators/GST/GST_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/bank/compound_interest_view.dart';
 import 'package:demo_project/view/screens/calculators/bank/simple_interest_view.dart';
@@ -17,34 +22,44 @@ import 'package:demo_project/view/screens/calculators/loan/car_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/loan/home_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/loan/personal_calc_view.dart';
 import 'package:demo_project/view/screens/calculators/loan/property_calc_view.dart';
-import 'package:flutter/material.dart';
-// Import all required calculator views...
+
+Widget wrapWithProvider(Widget child) {
+  return ChangeNotifierProvider(
+    create: (_) => BaseCalculatorProvider(),
+    child: child,
+  );
+}
 
 final Map<String, Widget Function()> calculatorRouteMap = {
-  // bank calculators
-  "Simple Interest Calculator": () => SimpleInterestView(),
-  "Compound Interest Calculator": () => CompoundInterestView(),
-  //Income Tax Calculator
-  "HRA Calculator": () => HRAcalcView(),
-  "Depreciation Calculator": () => DepreciationCalcView(),
-  "Tax Calculator": () => TaxtCalcView(),
-  "Capital Gain Calculator": () => CapitalGainCalcView(),
-  //Investment Calculators
-  "Post Office MIS": () => PostOfficeMISView(),
-  "CARG Calculator": () => CARGcalcView(),
-  "RD Calculator": () => RDcalcView(),
-  "FD Calculator": () => FDcalcView(),
-  "Lump Sum Calculator": () => LumpSumCalcView(),
-  "SIP Calculator": () => SIPcalcView(),
-  // insurance Calculators
-  "NPS Calculator": () => NPSCalcView(),
-  // Loan Calculator
-  "Business Loan Calculator": () => BusinessCalcView(),
-  "Car Loan Calculator": () => CarCalcView(),
-  "Loan Against Property": () => PropertyCalcView(),
-  "Home Loan Calculator": () => HomeCalcView(),
-  "Personal Loan Calculator": () => PersonalCalcView(),
+  // Bank
+  "Simple Interest Calculator": () => wrapWithProvider(SimpleInterestView()),
+  "Compound Interest Calculator":
+      () => wrapWithProvider(CompoundInterestView()),
 
-  //GST Calculators
-  "GST Calculator": () => GSTcalcView(),
+  // Income Tax
+  "HRA Calculator": () => wrapWithProvider(HRAcalcView()),
+  "Depreciation Calculator": () => wrapWithProvider(DepreciationCalcView()),
+  "Tax Calculator": () => wrapWithProvider(TaxtCalcView()),
+  "Capital Gain Calculator": () => wrapWithProvider(CapitalGainCalcView()),
+
+  // Investment
+  "Post Office MIS": () => wrapWithProvider(PostOfficeMISView()),
+  "CARG Calculator": () => wrapWithProvider(CARGcalcView()),
+  "RD Calculator": () => wrapWithProvider(RDcalcView()),
+  "FD Calculator": () => wrapWithProvider(FDcalcView()),
+  "Lump Sum Calculator": () => wrapWithProvider(LumpSumCalcView()),
+  "SIP Calculator": () => wrapWithProvider(SIPcalcView()),
+
+  // Insurance
+  "NPS Calculator": () => wrapWithProvider(NPSCalcView()),
+
+  // Loan
+  "Business Loan Calculator": () => wrapWithProvider(BusinessCalcView()),
+  "Car Loan Calculator": () => wrapWithProvider(CarCalcView()),
+  "Loan Against Property": () => wrapWithProvider(PropertyCalcView()),
+  "Home Loan Calculator": () => wrapWithProvider(HomeCalcView()),
+  "Personal Loan Calculator": () => wrapWithProvider(PersonalCalcView()),
+
+  // GST
+  "GST Calculator": () => wrapWithProvider(GSTcalcView()),
 };

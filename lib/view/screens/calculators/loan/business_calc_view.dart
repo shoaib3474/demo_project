@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:demo_project/controller/bank_ctrls/compound_interest_controller.dart';
+import 'package:demo_project/controller/loan/business_calc_ctrl.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/utils.dart';
 import 'package:demo_project/view/screens/textfield.dart';
@@ -19,7 +19,6 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
   final TextEditingController loanCtrl = TextEditingController();
   final TextEditingController rateCtrl = TextEditingController();
   final TextEditingController timeCtrl = TextEditingController();
-  String timeType = 'Yearly';
 
   @override
   void initState() {
@@ -28,7 +27,7 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
   }
 
   Future<void> _loadPreviousResult() async {
-    final model = await CompoundInterestCtrl.load();
+    final model = await BusinessLoanController.load();
     if (model != null) {
       context.read<BaseCalculatorProvider>().setModel(model);
     }
@@ -48,14 +47,13 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
     final rate = double.tryParse(rateCtrl.text) ?? 0;
     final time = double.tryParse(timeCtrl.text) ?? 0;
 
-    final result = CompoundInterestCtrl.calculate(
+    final result = BusinessLoanController.calculate(
       amount: principal,
       rate: rate,
       time: time,
-      timeType: timeType,
     );
 
-    await CompoundInterestCtrl.save(result);
+    await BusinessLoanController.save(result);
     context.read<BaseCalculatorProvider>().setModel(result);
   }
 
@@ -63,7 +61,7 @@ class _BusinessCalcViewState extends State<BusinessCalcView> {
     loanCtrl.clear();
     rateCtrl.clear();
     timeCtrl.clear();
-    await CompoundInterestCtrl.clear();
+    await BusinessLoanController.clear();
     context.read<BaseCalculatorProvider>().clear();
     ScaffoldMessenger.of(
       context,

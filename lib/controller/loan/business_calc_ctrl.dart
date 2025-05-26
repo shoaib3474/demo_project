@@ -1,19 +1,17 @@
 import 'dart:math';
-
 import 'package:demo_project/models/base_calculator_model.dart';
 import 'package:demo_project/utils/services/base_shared_preference.dart';
 
-class CarLoanController {
-  static const String _key = 'car_loan_result';
+class BusinessLoanController {
+  static const String _key = 'business_loan_result';
 
-  /// Calculates EMI, interest, and total amount for a car loan.
+  /// Calculates EMI, interest, and total payable amount for a business loan.
   static BaseCalculatorModel calculate({
     required double amount,
     required double rate,
     required double time,
-    String timeType = 'Yearly',
   }) {
-    final months = timeType.toLowerCase() == 'monthly' ? time : time * 12;
+    final months = time * 12;
     final monthlyRate = rate / (12 * 100);
 
     final emi =

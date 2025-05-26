@@ -1,6 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
-import 'package:demo_project/controller/loan/business_calc_ctrl.dart';
+import 'package:demo_project/controller/loan/car_calc_ctrl.dart';
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/utils.dart';
 import 'package:demo_project/view/screens/textfield.dart';

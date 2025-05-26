@@ -24,7 +24,7 @@ class ExportHelper {
 
       Share.shareXFiles([XFile(imagePath)], text: 'Shared from my app');
     } catch (e) {
-      print("Error exporting image: $e");
+      SizedBox();
     }
   }
 
@@ -55,7 +55,7 @@ class ExportHelper {
 
       Share.shareXFiles([XFile(file.path)], text: 'Here is your report PDF!');
     } catch (e) {
-      print("Error exporting PDF: $e");
+      SizedBox();
     }
   }
 }

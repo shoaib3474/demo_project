@@ -4,6 +4,7 @@ import 'package:demo_project/controller/bank_ctrls/simple_interest_controller.da
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/services/export_helper.dart';
 import 'package:demo_project/utils/utils.dart';
+import 'package:demo_project/utils/services/export_helper.dart';
 
 import 'package:demo_project/view/screens/textfield.dart';
 import 'package:demo_project/widgets/result_chart.dart';
@@ -141,40 +142,36 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
             ),
             SizedBox(height: 20),
             if (model != null)
-              Column(
-                children: [
-                  RepaintBoundary(
-                    key: exportKey,
-                    child: ResultChart(
-                      dataEntries: [
-                        ChartData(
-                          value: model.amount,
-                          color: AppColors.secondary,
-                          label: 'Principal Amount',
-                        ),
-                        ChartData(
-                          value: model.result1 ?? 0.0,
-                          color: AppColors.primary,
-                          label: 'Interest Amount',
-                        ),
-                      ],
-                      summaryRows: [
-                        SummaryRowData(
-                          label: "Principle Amount",
-                          value: double.tryParse(principalCtrl.text) ?? 0.0,
-                        ),
-                        SummaryRowData(
-                          label: "Total Earned",
-                          value: model.result1 ?? 0.0,
-                        ),
-                        SummaryRowData(
-                          label: "Total Amount",
-                          value: (model.amount + (model.result1 ?? 0.0)),
-                        ),
-                      ],
+              RepaintBoundary(
+                key: exportKey,
+                child: ResultChart(
+                  dataEntries: [
+                    ChartData(
+                      value: model.amount,
+                      color: AppColors.secondary,
+                      label: 'Principal Amount',
                     ),
-                  ),
-                ],
+                    ChartData(
+                      value: model.result1 ?? 0.0,
+                      color: AppColors.primary,
+                      label: 'Interest Amount',
+                    ),
+                  ],
+                  summaryRows: [
+                    SummaryRowData(
+                      label: "Principle Amount",
+                      value: double.tryParse(principalCtrl.text) ?? 0.0,
+                    ),
+                    SummaryRowData(
+                      label: "Total Earned",
+                      value: model.result1 ?? 0.0,
+                    ),
+                    SummaryRowData(
+                      label: "Total Amount",
+                      value: (model.amount + (model.result1 ?? 0.0)),
+                    ),
+                  ],
+                ),
               )
             else
               SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
