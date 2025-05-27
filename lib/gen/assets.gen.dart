@@ -200,6 +200,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/invoice.svg
   String get invoice => 'assets/icons/invoice.svg';
 
+  /// File path: assets/icons/itax_logo.svg
+  String get itaxLogo => 'assets/icons/itax_logo.svg';
+
   /// File path: assets/icons/items 1.svg
   String get items1 => 'assets/icons/items 1.svg';
 
@@ -330,6 +333,7 @@ class $AssetsIconsGen {
         inactiveCustomer,
         incomeTax,
         invoice,
+        itaxLogo,
         items1,
         itr,
         ixUserProfileFilled,

@@ -2,92 +2,76 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
 class ExportHelper {
   static Future<void> exportAsImage(GlobalKey key, String fileName) async {
     try {
-      RenderRepaintBoundary boundary =
-          key.currentContext?.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData = await image.toByteData(
-        format: ui.ImageByteFormat.png,
-      );
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      debugPrint("Start image export");
 
+      await Future.delayed(
+        Duration(milliseconds: 300),
+      ); // slight delay for build
+
+      RenderRepaintBoundary? boundary =
+          key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
+
+      if (boundary == null) {
+        debugPrint("❌ Render boundary is null.");
+        return;
+      }
+
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      if (byteData == null) {
+        debugPrint("❌ ByteData is null.");
+        return;
+      }
+
+      final pngBytes = byteData.buffer.asUint8List();
       final directory = await getApplicationDocumentsDirectory();
       final imagePath = '${directory.path}/$fileName.png';
       final imageFile = File(imagePath)..writeAsBytesSync(pngBytes);
 
-      Share.shareXFiles([XFile(imagePath)], text: 'Shared from my app');
+      await Share.shareXFiles([XFile(imagePath)], text: '$fileName Result');
     } catch (e) {
-      SizedBox();
+      debugPrint("Export failed: $e");
     }
   }
 
-  static Future<void> exportAsPdf(GlobalKey key, String fileName) async {
+  static Future<void> downloadAsImage(GlobalKey key, String fileName) async {
     try {
-      RenderRepaintBoundary boundary =
-          key.currentContext?.findRenderObject() as RenderRepaintBoundary;
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
-      ByteData? byteData = await image.toByteData(
-        format: ui.ImageByteFormat.png,
-      );
-      Uint8List pngBytes = byteData!.buffer.asUint8List();
+      print("Start image download");
 
-      final pdf = pw.Document();
-      final imageWidget = pw.MemoryImage(pngBytes);
+      await WidgetsBinding.instance.endOfFrame;
 
-      pdf.addPage(
-        pw.Page(
-          build: (pw.Context context) {
-            return pw.Center(child: pw.Image(imageWidget));
-          },
-        ),
-      );
+      if (await Permission.storage.request().isGranted) {
+        RenderRepaintBoundary? boundary =
+            key.currentContext?.findRenderObject() as RenderRepaintBoundary?;
 
-      final output = await getApplicationDocumentsDirectory();
-      final file = File('${output.path}/$fileName.pdf');
-      await file.writeAsBytes(await pdf.save());
+        if (boundary == null || !boundary.debugNeedsPaint) {
+          final image = await boundary!.toImage(pixelRatio: 3.0);
+          final byteData = await image.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
+          final pngBytes = byteData!.buffer.asUint8List();
 
-      Share.shareXFiles([XFile(file.path)], text: 'Here is your report PDF!');
+          final directory = await getExternalStorageDirectory(); // for Android
+          final downloadPath = '${directory!.path}/$fileName.png';
+          final file = File(downloadPath)..writeAsBytesSync(pngBytes);
+
+          print("Image saved at $downloadPath");
+        } else {
+          print("Boundary not ready");
+        }
+      } else {
+        print("Permission denied");
+      }
     } catch (e) {
-      SizedBox();
+      debugPrint("Download failed: $e");
     }
-  }
-}
-
-// buttons
-class ExportButtons extends StatelessWidget {
-  final GlobalKey exportKey;
-  final String fileName;
-
-  const ExportButtons({
-    super.key,
-    required this.exportKey,
-    required this.fileName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton.icon(
-          icon: const Icon(Icons.image),
-          label: const Text("Export Image"),
-          onPressed: () => ExportHelper.exportAsImage(exportKey, fileName),
-        ),
-        const SizedBox(width: 10),
-        ElevatedButton.icon(
-          icon: const Icon(Icons.picture_as_pdf),
-          label: const Text("Export PDF"),
-          onPressed: () => ExportHelper.exportAsPdf(exportKey, fileName),
-        ),
-      ],
-    );
   }
 }

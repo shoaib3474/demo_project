@@ -7,6 +7,7 @@ import 'package:demo_project/utils/utils.dart';
 import 'package:demo_project/utils/services/export_helper.dart';
 
 import 'package:demo_project/view/screens/textfield.dart';
+import 'package:demo_project/widgets/export_result_ui.dart';
 import 'package:demo_project/widgets/result_chart.dart';
 
 import 'package:flutter/material.dart';
@@ -86,106 +87,156 @@ class _SimpleInterestViewState extends State<SimpleInterestView> {
       appBar: CustomAppBar(
         title: 'Simple Interest Calculator',
         onBack: () => Navigator.pop(context),
-        onDownload: () {},
+        onDownload: () async {
+          await ExportHelper.exportAsImage(
+            exportKey,
+            "Simple interest calculator",
+          );
+          showDialog(
+            context: context,
+            builder:
+                (_) => Dialog(
+                  child: result(), // Use your result() widget here
+                ),
+          );
+        },
         onShare: () {},
       ),
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                spacing: 8,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(" Principal Amount", style: AppTextStyles.body16),
-                  CustomTextField(
-                    hintText: 'Amount',
-                    controller: principalCtrl,
-                    rightText: "₹",
-                  ),
-                  SizedBox(height: 2),
-                  Text(" Rate of Interest(P.A)", style: AppTextStyles.body16),
-                  CustomTextField(
-                    hintText: 'Interest Rate',
-                    controller: rateCtrl,
-                    rightText: "%",
-                  ),
-                  SizedBox(height: 2),
-                  Text(" Time Period", style: AppTextStyles.body16),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 250,
-                        child: CustomTextField(
-                          hintText: 'Time',
-                          controller: timeCtrl,
-                        ),
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        spacing: 8,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            " Principal Amount",
+                            style: AppTextStyles.body16,
+                          ),
+                          CustomTextField(
+                            hintText: 'Amount',
+                            controller: principalCtrl,
+                            rightText: "₹",
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            " Rate of Interest(P.A)",
+                            style: AppTextStyles.body16,
+                          ),
+                          CustomTextField(
+                            hintText: 'Interest Rate',
+                            controller: rateCtrl,
+                            rightText: "%",
+                          ),
+                          SizedBox(height: 2),
+                          Text(" Time Period", style: AppTextStyles.body16),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 220,
+                                child: CustomTextField(
+                                  hintText: 'Time',
+                                  controller: timeCtrl,
+                                ),
+                              ),
+                              Spacer(),
+                              SizedBox(
+                                width: 126,
+                                height: 52,
+                                child: CustomDropdown(
+                                  height: 44,
+                                  items: ["Yearly", "Monthly", "Quarterly"],
+                                  initialValue: 'Yearly',
+                                  onChanged: (val) {
+                                    setState(() => timeType = val);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Spacer(),
-                      SizedBox(
-                        width: 126,
-                        height: 52,
-                        child: CustomDropdown(
-                          height: 44,
-                          items: ["Yearly", "Monthly", "Quarterly"],
-                          initialValue: 'Yearly',
-                          onChanged: (val) {
-                            setState(() => timeType = val);
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 20),
-            if (model != null)
-              RepaintBoundary(
-                key: exportKey,
-                child: ResultChart(
-                  dataEntries: [
-                    ChartData(
-                      value: model.amount,
-                      color: AppColors.secondary,
-                      label: 'Principal Amount',
                     ),
-                    ChartData(
-                      value: model.result1 ?? 0.0,
-                      color: AppColors.primary,
-                      label: 'Interest Amount',
-                    ),
-                  ],
-                  summaryRows: [
-                    SummaryRowData(
-                      label: "Principle Amount",
-                      value: double.tryParse(principalCtrl.text) ?? 0.0,
-                    ),
-                    SummaryRowData(
-                      label: "Total Earned",
-                      value: model.result1 ?? 0.0,
-                    ),
-                    SummaryRowData(
-                      label: "Total Amount",
-                      value: (model.amount + (model.result1 ?? 0.0)),
-                    ),
+                    const SizedBox(height: 20),
+                    if (model != null)
+                      ResultChart(
+                        dataEntries: [
+                          ChartData(
+                            value: model.amount,
+                            color: AppColors.secondary,
+                            label: 'Principal Amount',
+                          ),
+                          ChartData(
+                            value: model.result1 ?? 0.0,
+                            color: AppColors.primary,
+                            label: 'Interest Amount',
+                          ),
+                        ],
+                        summaryRows: [
+                          SummaryRowData(
+                            label: "Principle Amount",
+                            value: double.tryParse(principalCtrl.text) ?? 0.0,
+                          ),
+                          SummaryRowData(
+                            label: "Total Earned",
+                            value: model.result1 ?? 0.0,
+                          ),
+                          SummaryRowData(
+                            label: "Total Amount",
+                            value: (model.amount + (model.result1 ?? 0.0)),
+                          ),
+                        ],
+                      )
+                    else
+                      SizedBox(height: 80),
                   ],
                 ),
-              )
-            else
-              SizedBox(height: 80 + MediaQuery.of(context).padding.bottom),
-            ExportButtons(
-              exportKey: exportKey,
-              fileName: "simple_interest_calculator",
+              ),
+            ),
+
+            /// Button stays above keyboard
+            ClearCalculateButtons(
+              onClearPressed: _onClear,
+              onCalculatePressed: _onCalculate,
             ),
           ],
         ),
       ),
-      bottomSheet: ClearCalculateButtons(
-        onClearPressed: _onClear,
-        onCalculatePressed: _onCalculate,
-      ),
     );
+  }
+
+  Widget result() {
+    final model = context.read<BaseCalculatorProvider>().model;
+
+    return RepaintBoundary(
+      key: exportKey,
+      child: ExportResultUI(
+        title: 'Simple Interest Result',
+        inputData: {
+          'Principal Amount': principalCtrl.text,
+          'Rate of Interest (P.A)': rateCtrl.text,
+          'Time Period': timeCtrl.text,
+          'Time Type': timeType,
+        },
+        chartData: {
+          'Principal Amount': double.tryParse(principalCtrl.text) ?? 0.0,
+          'Interest Amount': model?.result1 ?? 0.0,
+        },
+        resultData: {
+          'Interest Amount': (model?.result1 ?? 0.0).toStringAsFixed(2),
+          'Total Amount':
+              (model != null
+                  ? (model.amount + (model.result1 ?? 0.0)).toStringAsFixed(2)
+                  : '0.00'),
+        },
+      ),
+    ); // ✅ Your actual home screen
   }
 }
