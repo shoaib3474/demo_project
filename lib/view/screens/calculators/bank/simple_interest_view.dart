@@ -4,7 +4,6 @@ import 'package:demo_project/controller/bank_ctrls/simple_interest_controller.da
 import 'package:demo_project/providers/base_calculator_provider.dart';
 import 'package:demo_project/utils/services/export_helper.dart';
 import 'package:demo_project/utils/utils.dart';
-import 'package:demo_project/utils/services/export_helper.dart';
 
 import 'package:demo_project/view/screens/textfield.dart';
 import 'package:demo_project/widgets/export_result_ui.dart';
